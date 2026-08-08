@@ -36,8 +36,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0a0a0f]/80 border-b border-[#1f1f2e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-white">FUNDY</span>
-          <span className="text-xl font-bold text-[#00d4ff]">LOGIC</span>
+          <img src="/logo.png" alt="FundyLogic" className="h-8" />
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
           <a href="#services" className="hover:text-white transition">Services</a>
@@ -77,11 +76,11 @@ function Hero() {
           Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
         </motion.p>
         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#contact" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
-            Book a Discovery Call
+          <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
+            Analyze Your Website Free
           </a>
-          <a href="#services" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
-            See What We Build
+          <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
+            Book a Discovery Call
           </a>
         </motion.div>
         <motion.div variants={fadeUp} className="mt-16">
@@ -384,8 +383,7 @@ function Footer() {
     <footer className="py-12 border-t border-[#1f1f2e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-white">FUNDY</span>
-          <span className="text-lg font-bold text-[#00d4ff]">LOGIC</span>
+          <img src="/logo.png" alt="FundyLogic" className="h-6" />
         </div>
         <div className="flex items-center gap-6 text-sm text-gray-500">
           <a href="#services" className="hover:text-white transition">Services</a>

@@ -24,11 +24,14 @@ export const viewport: Viewport = {
   themeColor: '#0a0a0f',
 }
 
+import { ChatWidget } from '@/components/chat/chat-widget'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen antialiased">
         {children}
+        <ChatWidget />
       </body>
     </html>
   )
