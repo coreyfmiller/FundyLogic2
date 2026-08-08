@@ -109,13 +109,13 @@ const fadeUp = {
 }
 
 export function DemoSection() {
-  const [activeIndustry, setActiveIndustry] = useState(industries[0])
+  const [activeIndustry, setActiveIndustry] = useState<typeof industries[number] | null>(null)
   const [messages, setMessages] = useState<{ role: string; content: string; id: string }[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isTraining, setIsTraining] = useState(false)
   const [trainingStep, setTrainingStep] = useState(0)
-  const [showStats, setShowStats] = useState(true)
+  const [showStats, setShowStats] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -125,7 +125,7 @@ export function DemoSection() {
   }, [messages])
 
   const handleIndustryChange = (industry: typeof industries[number]) => {
-    if (industry.id === activeIndustry.id) return
+    if (activeIndustry && industry.id === activeIndustry.id) return
     setMessages([])
     setInput('')
     setIsLoading(false)
@@ -152,7 +152,7 @@ export function DemoSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || isLoading) return
+    if (!input.trim() || isLoading || !activeIndustry) return
 
     const userMsg = { role: 'user', content: input, id: crypto.randomUUID() }
     const newMessages = [...messages, userMsg]
@@ -226,7 +226,7 @@ export function DemoSection() {
               key={ind.id}
               onClick={() => handleIndustryChange(ind)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                activeIndustry.id === ind.id
+                activeIndustry?.id === ind.id
                   ? 'bg-[#00d4ff] text-black'
                   : 'bg-[#1f1f2e] text-gray-400 hover:text-white hover:bg-[#2a2a3e]'
               }`}
@@ -253,17 +253,19 @@ export function DemoSection() {
             </div>
             <div className="flex-1 flex justify-center">
               <div className="bg-[#1f1f2e] rounded-lg px-4 py-1.5 text-xs text-gray-400 min-w-[200px] text-center">
-                {activeIndustry.domain}
+                {activeIndustry ? activeIndustry.domain : 'select an industry above'}
               </div>
             </div>
           </div>
 
           {/* Main content area */}
           <div className="bg-[#111118] flex flex-col md:flex-row min-h-[500px]">
-            {/* Left panel: Training + Stats */}
+            {/* Left panel: Idle / Training / Stats */}
             <div className="flex-1 p-5 md:p-6 hidden md:flex flex-col overflow-hidden">
               <AnimatePresence mode="wait">
-                {isTraining ? (
+                {!activeIndustry ? (
+                  <IdleView key="idle" />
+                ) : isTraining ? (
                   <TrainingView
                     key="training"
                     steps={activeIndustry.training}
@@ -288,45 +290,55 @@ export function DemoSection() {
                   <MessageCircle className="w-3.5 h-3.5 text-[#00d4ff]" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-white">{activeIndustry.label} Assistant</p>
+                  <p className="text-xs font-semibold text-white">
+                    {activeIndustry ? `${activeIndustry.label} Assistant` : 'AI Assistant'}
+                  </p>
                   <p className="text-[10px] text-gray-500 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                    Online now
+                    <span className={`w-1.5 h-1.5 rounded-full ${activeIndustry ? 'bg-green-500' : 'bg-gray-500'}`} />
+                    {activeIndustry ? 'Online now' : 'Waiting for industry...'}
                   </p>
                 </div>
               </div>
 
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-3 space-y-2.5 max-h-[340px]">
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl px-3 py-2 text-xs leading-relaxed bg-[#1f1f2e] text-gray-200 rounded-bl-sm">
-                    {activeIndustry.greeting}
+                {!activeIndustry ? (
+                  <div className="flex items-center justify-center h-full text-center px-4">
+                    <p className="text-xs text-gray-500">Pick an industry above to activate the agent.</p>
                   </div>
-                </div>
-                {messages.map(m => (
-                  <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs leading-relaxed ${
-                      m.role === 'user'
-                        ? 'bg-[#00d4ff] text-black rounded-br-sm'
-                        : 'bg-[#1f1f2e] text-gray-200 rounded-bl-sm'
-                    }`}>
-                      {m.role === 'user' ? m.content : (
-                        <span dangerouslySetInnerHTML={{
-                          __html: m.content
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\n/g, '<br/>')
-                        }} />
-                      )}
+                ) : (
+                  <>
+                    <div className="flex justify-start">
+                      <div className="max-w-[85%] rounded-2xl px-3 py-2 text-xs leading-relaxed bg-[#1f1f2e] text-gray-200 rounded-bl-sm">
+                        {activeIndustry.greeting}
+                      </div>
                     </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="rounded-2xl px-3 py-2 bg-[#1f1f2e] flex items-center gap-1.5">
-                      <Loader2 className="w-3 h-3 animate-spin text-[#00d4ff]" />
-                      <span className="text-[10px] text-gray-500">Typing...</span>
-                    </div>
-                  </div>
+                    {messages.map(m => (
+                      <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs leading-relaxed ${
+                          m.role === 'user'
+                            ? 'bg-[#00d4ff] text-black rounded-br-sm'
+                            : 'bg-[#1f1f2e] text-gray-200 rounded-bl-sm'
+                        }`}>
+                          {m.role === 'user' ? m.content : (
+                            <span dangerouslySetInnerHTML={{
+                              __html: m.content
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/\n/g, '<br/>')
+                            }} />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="flex justify-start">
+                        <div className="rounded-2xl px-3 py-2 bg-[#1f1f2e] flex items-center gap-1.5">
+                          <Loader2 className="w-3 h-3 animate-spin text-[#00d4ff]" />
+                          <span className="text-[10px] text-gray-500">Typing...</span>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
                 <div ref={messagesEndRef} />
               </div>
@@ -337,13 +349,13 @@ export function DemoSection() {
                   <input
                     value={input}
                     onChange={e => setInput(e.target.value)}
-                    placeholder="Type a message..."
+                    placeholder={activeIndustry ? 'Type a message...' : 'Select an industry first...'}
                     className="flex-1 bg-[#1f1f2e] border border-[#2a2a3e] rounded-full px-3 py-2 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
-                    disabled={isLoading}
+                    disabled={isLoading || !activeIndustry}
                   />
                   <button
                     type="submit"
-                    disabled={isLoading || !input.trim()}
+                    disabled={isLoading || !input.trim() || !activeIndustry}
                     className="w-7 h-7 rounded-full bg-[#00d4ff] text-black flex items-center justify-center disabled:opacity-40 transition flex-shrink-0"
                     aria-label="Send"
                   >
@@ -367,6 +379,30 @@ export function DemoSection() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// --- Idle state before industry is picked ---
+function IdleView() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex-1 flex flex-col items-center justify-center text-center px-4"
+    >
+      <div className="w-16 h-16 rounded-full bg-[#1f1f2e] flex items-center justify-center mb-5 border border-[#2a2a3e]">
+        <Brain className="w-8 h-8 text-[#00d4ff]/50" />
+      </div>
+      <p className="text-sm font-medium text-white mb-2">Choose an industry to deploy an agent</p>
+      <p className="text-xs text-gray-500 max-w-[240px]">
+        Select a business type above and watch the AI train in real time on that industry's data.
+      </p>
+      <div className="mt-6 flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] animate-pulse" />
+        <span className="text-[10px] text-gray-600 uppercase tracking-wider">Awaiting selection</span>
+      </div>
+    </motion.div>
   )
 }
 
