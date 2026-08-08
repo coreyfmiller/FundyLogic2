@@ -142,10 +142,6 @@ export function DemoSection() {
       setTrainingStep(step)
       if (step >= steps) {
         clearInterval(interval)
-        setTimeout(() => {
-          setIsTraining(false)
-          setShowStats(true)
-        }, 400)
       }
     }, 280)
   }
@@ -265,18 +261,11 @@ export function DemoSection() {
               <AnimatePresence mode="wait">
                 {!activeIndustry ? (
                   <IdleView key="idle" />
-                ) : isTraining ? (
+                ) : (
                   <TrainingView
                     key="training"
                     steps={activeIndustry.training}
                     currentStep={trainingStep}
-                  />
-                ) : (
-                  <StatsView
-                    key="stats"
-                    stats={activeIndustry.stats}
-                    activity={activeIndustry.activity}
-                    show={showStats}
                   />
                 )}
               </AnimatePresence>
