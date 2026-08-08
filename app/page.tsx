@@ -43,7 +43,8 @@ function Navbar() {
           <a href="#services" className="hover:text-white transition">Services</a>
           <a href="#work" className="hover:text-white transition">Work</a>
           <a href="#pricing" className="hover:text-white transition">Pricing</a>
-          <a href="#faq" className="hover:text-white transition">FAQ</a>
+          <a href="/blog" className="hover:text-white transition">Blog</a>
+          <a href="/analyze" className="hover:text-white transition">Free Audit</a>
         </div>
         <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition">
           Book a Call <ArrowRight className="w-4 h-4" />
@@ -486,8 +487,8 @@ function Footer() {
         <div className="flex items-center gap-6 text-sm text-gray-500">
           <a href="#services" className="hover:text-white transition">Services</a>
           <a href="#work" className="hover:text-white transition">Work</a>
-          <a href="#pricing" className="hover:text-white transition">Pricing</a>
-          <a href="#faq" className="hover:text-white transition">FAQ</a>
+          <a href="/blog" className="hover:text-white transition">Blog</a>
+          <a href="/analyze" className="hover:text-white transition">Free Audit</a>
         </div>
         <p className="text-sm text-gray-600">Built in New Brunswick, Canada</p>
       </div>
