@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState } from 'react'
+import { DemoSection } from '@/components/demo-section'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,6 +22,7 @@ export default function Home() {
       <SocialProof />
       <Services />
       <HowItWorks />
+      <DemoSection />
       <Stats />
       <RecentWork />
       <Testimonials />
