@@ -24,7 +24,9 @@ export function DemoSection() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
   }, [messages])
 
   // Reset chat when industry changes
