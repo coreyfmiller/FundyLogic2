@@ -329,17 +329,17 @@ function IdleTerminal() {
       className="flex-1 flex flex-col"
     >
       <div className="flex items-center gap-2 mb-3">
-        <Brain className="w-4 h-4 text-green-400" />
-        <span className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">Agent Terminal</span>
+        <Brain className="w-4 h-4 text-[#00d4ff]" />
+        <span className="text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">Agent Terminal</span>
       </div>
       <div className="flex-1 bg-[#0a0a0f] rounded-xl border border-[#1f1f2e] p-4 font-mono text-[11px] leading-relaxed overflow-hidden">
         {lines.map((line, i) => (
           <motion.p
             key={i}
             initial={{ opacity: 0 }}
-            animate={{ opacity: line ? 0.7 : 0 }}
+            animate={{ opacity: line ? 0.6 : 0 }}
             transition={{ duration: 0.2, delay: i * 0.06 }}
-            className={line.includes('STATUS') ? 'text-green-400 mt-2' : 'text-green-400/50'}
+            className={line.includes('STATUS') ? 'text-[#00d4ff] mt-2' : 'text-[#00d4ff]/40'}
           >
             {line || '\u00A0'}
           </motion.p>
@@ -348,7 +348,7 @@ function IdleTerminal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="mt-3 text-green-400"
+          className="mt-3 text-[#00d4ff]"
         >
           $ <span className="animate-pulse">▊</span>
         </motion.p>
@@ -432,7 +432,7 @@ function TrainingTerminal({ steps, currentStep }: { steps: string[]; currentStep
             transition={{ delay: 0.2 }}
             className="mt-3 pt-3 border-t border-[#1f1f2e]"
           >
-            <p className="text-green-400">
+            <p className="text-[#00d4ff]">
               <span className="text-gray-600">$</span> Agent online. Ready for visitors.
               <span className="animate-pulse ml-1">▊</span>
             </p>
