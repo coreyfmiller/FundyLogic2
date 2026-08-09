@@ -515,27 +515,82 @@ function Testimonials() {
 }
 
 function Pricing() {
+  const tiers = [
+    {
+      name: 'Agent Only',
+      price: '$2,500 - $5,500',
+      description: 'Your site is solid. We deploy an AI agent on it.',
+      features: [
+        'Custom AI agent trained on your business',
+        'Installed on your existing website',
+        'Lead capture + email notifications',
+        'Voice agent option available',
+        '30 days of tuning included',
+        'Optional monthly support plan',
+      ],
+      cta: 'Get Started',
+      highlight: false,
+    },
+    {
+      name: 'Agent + AI-Ready Site',
+      price: '$8,000 - $12,000',
+      description: 'We rebuild your site for AI, then deploy the agent on top.',
+      features: [
+        'Everything in Agent Only',
+        'Full website rebuild (Next.js)',
+        'Content structured for AI training',
+        'SEO + AEO foundations built in',
+        'FAQ, services, and pricing pages optimized',
+        'The agent and the site work as one system',
+      ],
+      cta: 'Book a Discovery Call',
+      highlight: true,
+    },
+  ]
+
   return (
     <section id="pricing" className="py-24 md:py-32 border-t border-[#1f1f2e]">
-      <div className="max-w-3xl mx-auto px-4 text-center">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+      <div className="max-w-5xl mx-auto px-4">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-12">
           <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Simple Pricing</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400 mb-10">Every build is custom. Here is where most projects land.</motion.p>
-          <motion.div variants={fadeUp} className="glass-card rounded-2xl p-10 glow-cyan animate-border-glow">
-            <div className="text-5xl font-bold text-white mb-2">$2,500 - $5,500</div>
-            <p className="text-gray-400 mb-6">One-time build. You own everything.</p>
-            <ul className="text-left text-gray-300 space-y-3 max-w-md mx-auto mb-8">
-              <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0" /> Custom AI agent trained on your business</li>
-              <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0" /> Installed on your website</li>
-              <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0" /> Lead capture and email notification</li>
-              <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0" /> 30 days of tuning included</li>
-              <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0" /> Optional monthly support plan</li>
-            </ul>
-            <a href="#contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold hover:bg-[#00b8e6] transition">
-              Book a Discovery Call <ArrowRight className="w-5 h-5" />
-            </a>
-          </motion.div>
+          <motion.p variants={fadeUp} className="text-gray-400 max-w-xl mx-auto">Every build is custom. Here is where most projects land.</motion.p>
         </motion.div>
+
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {tiers.map(tier => (
+            <motion.div
+              key={tier.name}
+              variants={fadeUp}
+              className={`glass-card rounded-2xl p-8 flex flex-col ${tier.highlight ? 'border-[#00d4ff]/30 glow-cyan' : ''}`}
+            >
+              <h3 className="text-lg font-bold text-white mb-1">{tier.name}</h3>
+              <p className="text-xs text-gray-500 mb-4">{tier.description}</p>
+              <div className="text-3xl font-bold text-white mb-6">{tier.price}</div>
+              <ul className="space-y-3 mb-8 flex-1">
+                {tier.features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                    <Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0 mt-0.5" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contact"
+                className={`w-full py-3.5 rounded-lg font-semibold text-center transition ${
+                  tier.highlight
+                    ? 'bg-[#00d4ff] text-black hover:bg-[#00b8e6]'
+                    : 'bg-[#1f1f2e] text-white hover:bg-[#2a2a3e]'
+                }`}
+              >
+                {tier.cta}
+              </a>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.p initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center text-xs text-gray-600 mt-6">
+          One-time build. You own everything. No monthly lock-in required.
+        </motion.p>
       </div>
     </section>
   )
