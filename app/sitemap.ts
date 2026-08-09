@@ -2,7 +2,10 @@ import type { MetadataRoute } from 'next'
 import { posts } from '@/lib/blog-posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const blogEntries: MetadataRoute.Sitemap = posts.map(post => ({
+  const now = new Date()
+  const blogEntries: MetadataRoute.Sitemap = posts
+    .filter(post => new Date(post.date) <= now)
+    .map(post => ({
     url: `https://fundylogic.com/blog/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: 'monthly',

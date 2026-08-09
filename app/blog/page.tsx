@@ -10,7 +10,13 @@ export const metadata: Metadata = {
   },
 }
 
+function getPublishedPosts() {
+  const now = new Date()
+  return posts.filter(post => new Date(post.date) <= now)
+}
+
 export default function BlogPage() {
+  const publishedPosts = getPublishedPosts()
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       <nav className="border-b border-[#1f1f2e] bg-[#0a0a0f]/80 backdrop-blur-md">
@@ -27,7 +33,7 @@ export default function BlogPage() {
         <p className="text-gray-400 mb-12">Practical guides on AI, automation, and growing your business.</p>
 
         <div className="space-y-6">
-          {posts.map(post => (
+          {publishedPosts.map(post => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>
               <article className="glass-card rounded-xl p-6 hover:border-[#00d4ff]/20 transition group">
                 <div className="flex items-center gap-3 mb-2">
