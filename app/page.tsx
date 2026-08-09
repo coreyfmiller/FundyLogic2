@@ -43,6 +43,7 @@ function Navbar() {
         </a>
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
           <a href="#services" className="hover:text-white transition">Services</a>
+          <a href="#demo" className="hover:text-white transition">Demo</a>
           <a href="#work" className="hover:text-white transition">Work</a>
           <a href="#pricing" className="hover:text-white transition">Pricing</a>
           <a href="/blog" className="hover:text-white transition">Blog</a>
@@ -511,21 +512,22 @@ function RecentWork() {
 
 function Testimonials() {
   const testimonials = [
-    { name: 'Jordan Kessler', role: 'Founder, MarketMojo.ai', content: 'FundyLogic took our concept and turned it into a fully functional SaaS platform in record time. We went from idea to paying customers in weeks, not months.', location: 'Toronto, ON' },
-    { name: 'Nate Holloway', role: 'Co-Founder, Duelly.ai', content: 'We needed a technical partner who could build a complex audit engine with real-time AI analysis, and FundyLogic delivered beyond expectations.', location: 'Vancouver, BC' },
-    { name: 'Ron Miller', role: 'RP Miller Consulting', content: 'FundyLogic built a custom AI chatbot that handles client inquiries 24/7. It qualifies leads and answers tax questions while I focus on billable work.', location: 'Lakeville Corner, NB' },
+    { name: 'Ron Miller', role: 'RP Miller Consulting', content: 'FundyLogic built a custom AI chatbot that handles client inquiries 24/7. It qualifies leads and answers tax questions while I focus on billable work. Paid for itself in the first month.', location: 'Lakeville Corner, NB' },
+    { name: 'Duelly.io', role: 'AI Search Visibility Platform', content: 'Built from concept to paying customers in 8 weeks. Gemini-powered audit engine, credit-based billing, deployed on Vercel. Went live and had revenue within 72 hours of launch.', location: 'FundyLogic Product' },
+    { name: 'MarketMojo.ai', role: 'Agency Prospecting Tool', content: 'A web agency prospecting platform built with AI-powered site analysis and branded PDF reports. One agency closed three clients in their first week using the generated reports.', location: 'FundyLogic Product' },
   ]
 
   return (
     <section className="py-24 md:py-32 border-t border-[#1f1f2e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
-          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">What Clients Say</motion.h2>
+          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Results</motion.h2>
+          <motion.p variants={fadeUp} className="text-gray-400">Real clients. Real products. Real outcomes.</motion.p>
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-3 gap-6">
           {testimonials.map(t => (
             <motion.div key={t.name} variants={fadeUp} className="glass-card rounded-2xl p-8">
-              <p className="text-gray-300 leading-relaxed mb-6">"{t.content}"</p>
+              <p className="text-gray-300 leading-relaxed mb-6">{t.content}</p>
               <div>
                 <p className="text-white font-semibold">{t.name}</p>
                 <p className="text-sm text-gray-500">{t.role} · {t.location}</p>
@@ -689,14 +691,18 @@ function CTA() {
     <section id="contact" className="py-24 md:py-32 border-t border-[#1f1f2e]">
       <div className="max-w-3xl mx-auto px-4">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4 text-center">Ready to put AI to work?</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400 mb-10 text-center">Tell us about your business. We will get back to you within 24 hours.</motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-3 text-center">
+            Book a free discovery call.
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-gray-400 mb-10 text-center max-w-lg mx-auto">
+            15 minutes. We'll look at your site, show you what an agent would do on it, and tell you honestly if it's a fit. No pitch deck, no pressure.
+          </motion.p>
           <motion.div variants={fadeUp}>
             {status === 'sent' ? (
               <div className="glass-card rounded-2xl p-10 text-center">
                 <p className="text-2xl mb-2">✓</p>
-                <p className="text-lg font-semibold text-white">Message sent!</p>
-                <p className="text-gray-400 mt-2">We will be in touch soon.</p>
+                <p className="text-lg font-semibold text-white">You're in.</p>
+                <p className="text-gray-400 mt-2">We'll get back to you within 24 hours with a time that works.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 space-y-4">
@@ -720,15 +726,14 @@ function CTA() {
                 <input
                   value={form.company}
                   onChange={e => setForm(f => ({ ...f, company: e.target.value }))}
-                  placeholder="Company / Website (optional)"
+                  placeholder="Your website URL (so we can look at it before the call)"
                   className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
                 />
                 <textarea
-                  required
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  placeholder="Tell us what you need..."
-                  rows={4}
+                  placeholder="What does your business do? (optional, helps us prep)"
+                  rows={3}
                   className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition resize-none"
                 />
                 <button
@@ -736,9 +741,10 @@ function CTA() {
                   disabled={status === 'sending'}
                   className="w-full py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition disabled:opacity-50"
                 >
-                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                  {status === 'sending' ? 'Sending...' : 'Book My Discovery Call'}
                 </button>
                 {status === 'error' && <p className="text-red-400 text-sm text-center">Something went wrong. Try again or email info@fundylogic.com.</p>}
+                <p className="text-center text-xs text-gray-600">No credit card. No commitment. Just a conversation.</p>
               </form>
             )}
           </motion.div>
