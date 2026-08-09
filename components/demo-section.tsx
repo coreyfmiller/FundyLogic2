@@ -168,15 +168,14 @@ export function DemoSection() {
           </form>
         </motion.div>
 
-        {/* Browser frame - only shows after deploy starts */}
-        <AnimatePresence>
-          {(isTraining || isDeployed) && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="rounded-2xl border border-[#1f1f2e] overflow-hidden shadow-2xl shadow-[#00d4ff]/5 max-w-5xl mx-auto"
-            >
+        {/* Browser frame - always visible */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="rounded-2xl border border-[#1f1f2e] overflow-hidden shadow-2xl shadow-[#00d4ff]/5 max-w-5xl mx-auto"
+        >
               {/* Browser chrome */}
               <div className="bg-[#0a0a0f] border-b border-[#1f1f2e] px-4 py-3 flex items-center gap-3">
                 <div className="flex gap-1.5">
@@ -193,9 +192,60 @@ export function DemoSection() {
 
               {/* Main content */}
               <div className="bg-[#111118] flex flex-col md:flex-row min-h-[500px]">
-                {/* Left: Training terminal */}
-                <div className="flex-1 p-5 md:p-6 hidden md:flex flex-col overflow-hidden">
-                  <TrainingTerminal steps={trainingSteps} currentStep={trainingStep} />
+                {/* Left: Mock website with training overlay */}
+                <div className="flex-1 p-5 md:p-6 hidden md:flex flex-col overflow-hidden relative">
+                  {/* Mock website wireframe (always visible) */}
+                  <div className="space-y-4">
+                    {/* Mock nav */}
+                    <div className="flex items-center justify-between">
+                      <div className="h-4 w-28 bg-[#1f1f2e] rounded" />
+                      <div className="flex gap-4">
+                        <div className="h-3 w-12 bg-[#1f1f2e] rounded" />
+                        <div className="h-3 w-12 bg-[#1f1f2e] rounded" />
+                        <div className="h-3 w-16 bg-[#00d4ff]/20 rounded" />
+                      </div>
+                    </div>
+                    {/* Mock hero */}
+                    <div className="mt-6 space-y-3">
+                      <div className="h-6 w-3/4 bg-[#1f1f2e] rounded" />
+                      <div className="h-6 w-1/2 bg-[#1f1f2e] rounded" />
+                      <div className="h-4 w-full bg-[#1f1f2e]/50 rounded mt-4" />
+                      <div className="h-4 w-5/6 bg-[#1f1f2e]/50 rounded" />
+                    </div>
+                    {/* Mock CTA */}
+                    <div className="flex gap-3 mt-4">
+                      <div className="h-10 w-28 bg-[#00d4ff]/20 rounded-lg" />
+                      <div className="h-10 w-28 bg-[#1f1f2e] rounded-lg" />
+                    </div>
+                    {/* Mock cards */}
+                    <div className="grid grid-cols-3 gap-3 mt-6">
+                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
+                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
+                        <div className="h-2 w-16 bg-[#1f1f2e] rounded" />
+                      </div>
+                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
+                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
+                        <div className="h-2 w-14 bg-[#1f1f2e] rounded" />
+                      </div>
+                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
+                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
+                        <div className="h-2 w-12 bg-[#1f1f2e] rounded" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Training overlay */}
+                  <AnimatePresence>
+                    {(isTraining || isDeployed) && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute inset-0 bg-[#111118]/90 backdrop-blur-sm p-5 md:p-6 flex flex-col"
+                      >
+                        <TrainingTerminal steps={trainingSteps} currentStep={trainingStep} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Right: Chat */}
@@ -216,7 +266,14 @@ export function DemoSection() {
 
                   {/* Messages */}
                   <div className="flex-1 overflow-y-auto p-3 space-y-2.5 max-h-[340px]">
-                    {!isDeployed ? (
+                    {!isTraining && !isDeployed ? (
+                      <div className="flex items-center justify-center h-full">
+                        <div className="text-center px-4">
+                          <MessageCircle className="w-5 h-5 text-[#00d4ff]/30 mx-auto mb-2" />
+                          <p className="text-[11px] text-gray-500">Deploy an agent to start chatting.</p>
+                        </div>
+                      </div>
+                    ) : !isDeployed ? (
                       <div className="flex items-center justify-center h-full">
                         <div className="text-center px-4">
                           <Loader2 className="w-5 h-5 text-[#00d4ff] animate-spin mx-auto mb-2" />
@@ -295,8 +352,6 @@ export function DemoSection() {
                 </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </section>
   )
