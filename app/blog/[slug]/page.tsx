@@ -76,12 +76,18 @@ export default async function BlogPostPage({ params }: Props) {
       />
       <div className="min-h-screen bg-[#0a0a0f]">
         <nav className="border-b border-[#1f1f2e] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="FundyLogic" className="h-8" />
             </Link>
-            <Link href="/blog" className="text-sm text-gray-400 hover:text-white transition">
-              ← All Posts
+            <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
+              <Link href="/#services" className="hover:text-white transition">Services</Link>
+              <Link href="/#demo" className="hover:text-white transition">Demo</Link>
+              <Link href="/blog" className="hover:text-white transition">Blog</Link>
+              <Link href="/analyze" className="hover:text-white transition">Free Audit</Link>
+            </div>
+            <Link href="/#contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition">
+              Book a Call
             </Link>
           </div>
         </nav>

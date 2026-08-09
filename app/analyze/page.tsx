@@ -109,11 +109,17 @@ export default function AnalyzePage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] bg-grid">
-      <nav className="border-b border-[#1f1f2e] bg-[#0a0a0f]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <nav className="border-b border-[#1f1f2e] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="FundyLogic" className="h-8" />
           </a>
+          <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
+            <a href="/#services" className="hover:text-white transition">Services</a>
+            <a href="/#demo" className="hover:text-white transition">Demo</a>
+            <a href="/#pricing" className="hover:text-white transition">Pricing</a>
+            <a href="/blog" className="hover:text-white transition">Blog</a>
+          </div>
           <a href="/#contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition">
             Book a Call <ArrowRight className="w-4 h-4" />
           </a>
