@@ -296,6 +296,11 @@ export function DemoSection() {
             </div>
           </div>
         </motion.div>
+
+        {/* Disclaimer */}
+        <p className="text-center text-[11px] text-gray-600 mt-4 max-w-lg mx-auto">
+          This is a general demo. Your actual agent gets trained on your real services, pricing, hours, and policies so every answer is specific to your business.
+        </p>
       </div>
     </section>
   )
