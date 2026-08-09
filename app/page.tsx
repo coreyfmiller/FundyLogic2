@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DemoSection } from '@/components/demo-section'
 
 const fadeUp = {
@@ -67,31 +67,134 @@ function Hero() {
         initial="hidden"
         animate="visible"
         variants={stagger}
-        className="max-w-4xl mx-auto px-4 text-center relative z-10"
+        className="max-w-6xl mx-auto px-4 relative z-10 w-full"
       >
-        <motion.p variants={fadeUp} className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
-          AI Agents for Small Business
-        </motion.p>
-        <motion.h1 variants={fadeUp} className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight mb-6">
-          AI That Works<br />
-          <span className="text-[#00d4ff] glow-text">While You Sleep</span>
-        </motion.h1>
-        <motion.p variants={fadeUp} className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
-        </motion.p>
-        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
-            Analyze Your Website Free
-          </a>
-          <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
-            Book a Discovery Call
-          </a>
-        </motion.div>
-        <motion.div variants={fadeUp} className="mt-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Copy + CTAs */}
+          <div className="text-center lg:text-left">
+            <motion.p variants={fadeUp} className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
+              AI Agents for Small Business
+            </motion.p>
+            <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              AI That Works<br />
+              <span className="text-[#00d4ff] glow-text">While You Sleep</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-lg text-gray-400 max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
+              Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+              <a href="/analyze" className="px-7 py-3.5 rounded-lg bg-[#00d4ff] text-black font-bold hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
+                Analyze Your Website Free
+              </a>
+              <a href="#contact" className="px-7 py-3.5 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
+                Book a Discovery Call
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right: Live agent demo */}
+          <motion.div variants={fadeUp} className="hidden lg:block">
+            <HeroChat />
+          </motion.div>
+        </div>
+
+        <motion.div variants={fadeUp} className="mt-12 lg:mt-16 text-center">
           <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
         </motion.div>
       </motion.div>
     </section>
+  )
+}
+
+function HeroChat() {
+  const [visibleMessages, setVisibleMessages] = useState(0)
+
+  const conversation = [
+    { role: 'agent', text: "Hi! Welcome to Fundy Roofing. How can I help you today?" },
+    { role: 'visitor', text: "Do you do emergency leak repairs in Saint John?" },
+    { role: 'agent', text: "We do, 24/7 across greater Saint John. Is the leak active right now?" },
+    { role: 'visitor', text: "Yes, dripping into the kitchen." },
+    { role: 'agent', text: "Understood. I can get a crew out tonight between 7-9pm. What number should they text on the way?" },
+    { role: 'visitor', text: "506-555-0142" },
+    { role: 'agent', text: "Got it. Someone will text you within 30 minutes to confirm. Hang tight!" },
+  ]
+
+  useEffect(() => {
+    if (visibleMessages >= conversation.length) return
+    const delay = visibleMessages === 0 ? 1000 : (conversation[visibleMessages - 1].role === 'agent' ? 1800 : 1200)
+    const timer = setTimeout(() => setVisibleMessages(v => v + 1), delay)
+    return () => clearTimeout(timer)
+  }, [visibleMessages, conversation.length])
+
+  // Restart loop
+  useEffect(() => {
+    if (visibleMessages >= conversation.length) {
+      const timer = setTimeout(() => setVisibleMessages(0), 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [visibleMessages, conversation.length])
+
+  return (
+    <div className="w-full max-w-[340px] ml-auto rounded-2xl border border-[#1f1f2e] overflow-hidden shadow-2xl shadow-[#00d4ff]/5 bg-[#111118]">
+      {/* Chat header */}
+      <div className="px-4 py-3 border-b border-[#1f1f2e] flex items-center gap-2 bg-[#0a0a0f]">
+        <div className="w-7 h-7 rounded-full bg-[#00d4ff]/10 flex items-center justify-center">
+          <MessageSquare className="w-3.5 h-3.5 text-[#00d4ff]" />
+        </div>
+        <div>
+          <p className="text-xs font-semibold text-white">Fundy Assistant</p>
+          <p className="text-[10px] text-gray-500 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+            Online now
+          </p>
+        </div>
+        <span className="ml-auto text-[9px] text-gray-600 bg-[#1f1f2e] px-2 py-0.5 rounded">9:47 PM</span>
+      </div>
+
+      {/* Messages */}
+      <div className="p-3 space-y-2 min-h-[280px] max-h-[320px] overflow-hidden">
+        {conversation.slice(0, visibleMessages).map((msg, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`flex ${msg.role === 'visitor' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed ${
+              msg.role === 'visitor'
+                ? 'bg-[#00d4ff] text-black rounded-br-sm'
+                : 'bg-[#1f1f2e] text-gray-200 rounded-bl-sm'
+            }`}>
+              {msg.text}
+            </div>
+          </motion.div>
+        ))}
+        {visibleMessages < conversation.length && visibleMessages > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={`flex ${conversation[visibleMessages].role === 'visitor' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div className="rounded-2xl px-3.5 py-2 bg-[#1f1f2e] flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse [animation-delay:0.2s]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse [animation-delay:0.4s]" />
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="px-3 pb-3">
+        <div className="flex items-center gap-2 bg-[#0a0a0f] rounded-full border border-[#1f1f2e] px-3.5 py-2">
+          <span className="text-xs text-gray-600 flex-1">Type a message...</span>
+          <div className="w-6 h-6 rounded-full bg-[#00d4ff]/20 flex items-center justify-center">
+            <ArrowRight className="w-3 h-3 text-[#00d4ff]" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
