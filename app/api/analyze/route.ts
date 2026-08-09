@@ -8,18 +8,29 @@ const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 })
 
-async function fetchPage(url: string): Promise<{ html: string; ok: boolean }> {
+async function fetchPage(url: string): Promise<{ html: string; ok: boolean; status?: number }> {
   try {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 8000)
     const res = await fetch(url, {
       signal: controller.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
       redirect: 'follow',
     })
     clearTimeout(timeout)
-    if (!res.ok) return { html: '', ok: false }
+    if (res.status === 403 || res.status === 401) {
+      return { html: '', ok: false, status: res.status }
+    }
+    if (!res.ok) return { html: '', ok: false, status: res.status }
     const html = await res.text()
+    // Check if we got a captcha/challenge page instead of real content
+    if (html.length < 500 && /captcha|challenge|cloudflare|attention required/i.test(html)) {
+      return { html: '', ok: false, status: 403 }
+    }
     return { html, ok: true }
   } catch {
     return { html: '', ok: false }
@@ -88,6 +99,11 @@ export async function POST(req: NextRequest) {
     // Step 1: Fetch homepage
     const homepage = await fetchPage(baseUrl)
     if (!homepage.ok) {
+      if (homepage.status === 403 || homepage.status === 401) {
+        return NextResponse.json({
+          error: 'This website is blocking automated requests. This usually means they have Cloudflare or similar protection enabled. Try a different site, or contact us and we can run a manual assessment.'
+        })
+      }
       return NextResponse.json({ error: 'Could not reach that website. Check the URL and try again.' })
     }
 
