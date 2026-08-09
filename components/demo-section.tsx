@@ -376,7 +376,7 @@ function TrainingTerminal({ steps, currentStep }: { steps: string[]; currentStep
           {isComplete ? 'Agent Live' : 'Deploying Agent'}
         </span>
         {isComplete && (
-          <span className="ml-auto text-[10px] text-green-400 font-medium flex items-center gap-1">
+          <span className="ml-auto text-[10px] text-[#00d4ff] font-medium flex items-center gap-1">
             <CheckCircle className="w-3 h-3" /> Ready
           </span>
         )}
@@ -389,7 +389,7 @@ function TrainingTerminal({ steps, currentStep }: { steps: string[]; currentStep
           initial={{ width: '0%' }}
           animate={{
             width: `${(currentStep / steps.length) * 100}%`,
-            backgroundColor: isComplete ? '#22c55e' : '#00d4ff',
+            backgroundColor: '#00d4ff',
           }}
           transition={{ duration: 0.2 }}
         />
@@ -410,7 +410,7 @@ function TrainingTerminal({ steps, currentStep }: { steps: string[]; currentStep
               className="flex items-start gap-2"
             >
               {i < currentStep ? (
-                <CheckCircle className="w-3.5 h-3.5 text-green-400 flex-shrink-0 mt-px" />
+                <CheckCircle className="w-3.5 h-3.5 text-[#00d4ff] flex-shrink-0 mt-px" />
               ) : i === currentStep ? (
                 <Loader2 className="w-3.5 h-3.5 text-[#00d4ff] animate-spin flex-shrink-0 mt-px" />
               ) : (
