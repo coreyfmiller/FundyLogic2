@@ -192,61 +192,13 @@ export function DemoSection() {
 
               {/* Main content */}
               <div className="bg-[#111118] flex flex-col md:flex-row min-h-[500px]">
-                {/* Left: Mock website with training overlay */}
-                <div className="flex-1 p-5 md:p-6 hidden md:flex flex-col overflow-hidden relative">
-                  {/* Mock website wireframe (always visible underneath) */}
-                  <div className="space-y-4">
-                    {/* Mock nav */}
-                    <div className="flex items-center justify-between">
-                      <div className="h-4 w-28 bg-[#1f1f2e] rounded" />
-                      <div className="flex gap-4">
-                        <div className="h-3 w-12 bg-[#1f1f2e] rounded" />
-                        <div className="h-3 w-12 bg-[#1f1f2e] rounded" />
-                        <div className="h-3 w-16 bg-[#00d4ff]/20 rounded" />
-                      </div>
-                    </div>
-                    {/* Mock hero */}
-                    <div className="mt-6 space-y-3">
-                      <div className="h-6 w-3/4 bg-[#1f1f2e] rounded" />
-                      <div className="h-6 w-1/2 bg-[#1f1f2e] rounded" />
-                      <div className="h-4 w-full bg-[#1f1f2e]/50 rounded mt-4" />
-                      <div className="h-4 w-5/6 bg-[#1f1f2e]/50 rounded" />
-                    </div>
-                    {/* Mock CTA */}
-                    <div className="flex gap-3 mt-4">
-                      <div className="h-10 w-28 bg-[#00d4ff]/20 rounded-lg" />
-                      <div className="h-10 w-28 bg-[#1f1f2e] rounded-lg" />
-                    </div>
-                    {/* Mock cards */}
-                    <div className="grid grid-cols-3 gap-3 mt-6">
-                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
-                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
-                        <div className="h-2 w-16 bg-[#1f1f2e] rounded" />
-                      </div>
-                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
-                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
-                        <div className="h-2 w-14 bg-[#1f1f2e] rounded" />
-                      </div>
-                      <div className="h-20 bg-[#1f1f2e]/50 rounded-lg p-3">
-                        <div className="w-6 h-6 rounded-full bg-[#1f1f2e] mb-2" />
-                        <div className="h-2 w-12 bg-[#1f1f2e] rounded" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Training overlay (appears on deploy) */}
-                  <AnimatePresence>
-                    {(isTraining || isDeployed) && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute inset-0 bg-[#111118]/95 backdrop-blur-sm p-5 md:p-6 flex flex-col"
-                      >
-                        <TrainingTerminal steps={trainingSteps} currentStep={trainingStep} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                {/* Left: Terminal display */}
+                <div className="flex-1 p-5 md:p-6 hidden md:flex flex-col overflow-hidden">
+                  {isTraining || isDeployed ? (
+                    <TrainingTerminal steps={trainingSteps} currentStep={trainingStep} />
+                  ) : (
+                    <IdleTerminal />
+                  )}
                 </div>
 
                 {/* Right: Chat */}
@@ -355,6 +307,55 @@ export function DemoSection() {
             </motion.div>
       </div>
     </section>
+  )
+}
+
+// --- Idle Terminal (matrix-style green text) ---
+function IdleTerminal() {
+  const lines = [
+    '> FundyLogic Agent Framework v2.4.1',
+    '> Neural conversation engine loaded',
+    '> Lead qualification model ready',
+    '> Response guardrails active',
+    '> NLP pipeline initialized',
+    '> Knowledge base: empty',
+    '> Service area: not configured',
+    '> Pricing data: not loaded',
+    '',
+    '> STATUS: Awaiting deployment...',
+    '> Enter business type to begin training',
+  ]
+
+  return (
+    <div className="flex-1 flex flex-col">
+      <div className="flex items-center gap-2 mb-4">
+        <Brain className="w-4 h-4 text-green-400" />
+        <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">Agent Terminal</span>
+      </div>
+      <div className="flex-1 bg-[#0a0a0f] rounded-xl border border-[#1f1f2e] p-4 font-mono text-[11px] overflow-hidden">
+        <div className="space-y-1.5">
+          {lines.map((line, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: line ? 0.7 : 0 }}
+              transition={{ duration: 0.3, delay: i * 0.08 }}
+              className={`${line.includes('STATUS') || line.includes('Enter business') ? 'text-green-400' : 'text-green-400/50'}`}
+            >
+              {line || '\u00A0'}
+            </motion.p>
+          ))}
+        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="mt-4 text-green-400"
+        >
+          <span className="text-green-400/50">$</span> <span className="animate-pulse">▊</span>
+        </motion.p>
+      </div>
+    </div>
   )
 }
 
