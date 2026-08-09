@@ -445,10 +445,12 @@ function Stats() {
 
 function RecentWork() {
   const projects = [
-    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'AI agent handling emergency bookings 24/7', link: 'https://atlantic-plumbing.vercel.app' },
-    { name: 'Summit Roofing NB', description: 'Roofing contractor', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-ten.vercel.app' },
-    { name: 'Spark Electric', description: 'Electrical services', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-blue.vercel.app' },
-    { name: 'Crystal Clear Cleaning', description: 'Cleaning services', result: 'Recurring plan booking + service area agent', link: 'https://crystal-clear-olive.vercel.app' },
+    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app' },
+    { name: 'Summit Roofing NB', description: 'Roofing', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-ten.vercel.app' },
+    { name: 'Spark Electric', description: 'Electrical', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-blue.vercel.app' },
+    { name: 'Greenstone Landscaping', description: 'Landscaping', result: 'Seasonal services + estimate scheduling', link: 'https://greenstone-rho.vercel.app' },
+    { name: 'Pristine Auto Detailing', description: 'Auto Detailing', result: 'Package comparisons + mobile booking', link: 'https://pristine-chi.vercel.app' },
+    { name: 'Crystal Clear Cleaning', description: 'Cleaning Services', result: 'Recurring plans + service area coverage', link: 'https://crystal-clear-olive.vercel.app' },
   ]
 
   return (
@@ -470,7 +472,7 @@ function RecentWork() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={stagger}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {projects.map((project) => (
             <motion.a
