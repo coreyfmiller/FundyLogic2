@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: Props) {
       />
       <div className="min-h-screen bg-[#0a0a0f]">
         <nav className="border-b border-[#1f1f2e] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-40">
-          <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="FundyLogic" className="h-8" />
             </Link>

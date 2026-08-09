@@ -38,9 +38,9 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0a0a0f]/80 border-b border-[#1f1f2e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="FundyLogic" className="h-8" />
-        </div>
+        </a>
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
           <a href="#services" className="hover:text-white transition">Services</a>
           <a href="#work" className="hover:text-white transition">Work</a>
@@ -289,13 +289,13 @@ function SocialProof() {
   return (
     <section className="py-12 border-y border-[#1f1f2e]">
       <div className="max-w-5xl mx-auto px-4 text-center">
-        <p className="text-sm text-gray-500 mb-6 uppercase tracking-wide">Trusted by businesses across Atlantic Canada</p>
+        <p className="text-sm text-gray-500 mb-6 uppercase tracking-wide">Built for businesses across Atlantic Canada</p>
         <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-gray-500 text-sm font-medium">
-          <span>Duelly.io</span>
-          <span>KV Adventure Club</span>
-          <span>Clean Cut Crew</span>
-          <span>Donovan Home Solutions</span>
-          <span>Sunrise Seedlings</span>
+          <span>RP Miller Consulting</span>
+          <span>Atlantic Plumbing</span>
+          <span>Summit Roofing</span>
+          <span>Spark Electric</span>
+          <span>Crystal Clear Cleaning</span>
         </div>
       </div>
     </section>
@@ -445,10 +445,10 @@ function Stats() {
 
 function RecentWork() {
   const projects = [
-    { name: 'Duelly.io', description: 'AI search visibility SaaS', result: 'Full product build, Stripe integration, live customers' },
-    { name: 'KV Adventure Club', description: 'Kids subscription service', result: 'AI chatbot handling parent inquiries 24/7' },
-    { name: 'Clean Cut Crew', description: 'Lawn care service', result: 'Lead capture agent with booking automation' },
-    { name: 'Donovan Home Solutions', description: 'Home services', result: 'AI-powered quote request system' },
+    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'AI agent handling emergency bookings 24/7', link: 'https://atlantic-plumbing.vercel.app' },
+    { name: 'Summit Roofing NB', description: 'Roofing contractor', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-ten.vercel.app' },
+    { name: 'Spark Electric', description: 'Electrical services', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-blue.vercel.app' },
+    { name: 'Crystal Clear Cleaning', description: 'Cleaning services', result: 'Recurring plan booking + service area agent', link: 'https://crystal-clear-olive.vercel.app' },
   ]
 
   return (
@@ -462,7 +462,7 @@ function RecentWork() {
           className="text-center mb-16"
         >
           <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Recent Work</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400">Real builds. Real results.</motion.p>
+          <motion.p variants={fadeUp} className="text-gray-400">AI-ready sites with live agents. Click to explore.</motion.p>
         </motion.div>
 
         <motion.div
@@ -473,12 +473,25 @@ function RecentWork() {
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {projects.map((project) => (
-            <motion.div key={project.name} variants={fadeUp} className="glass-card rounded-xl p-6 hover:border-[#00d4ff]/20 transition">
-              <h3 className="text-lg font-bold text-white mb-1">{project.name}</h3>
+            <motion.a
+              key={project.name}
+              variants={fadeUp}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card rounded-xl p-6 hover:border-[#00d4ff]/20 transition group"
+            >
+              <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{project.name}</h3>
               <p className="text-sm text-gray-500 mb-3">{project.description}</p>
               <p className="text-sm text-[#00d4ff]">{project.result}</p>
-            </motion.div>
+            </motion.a>
           ))}
+        </motion.div>
+
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center mt-8">
+          <a href="/ai-ready-sites" className="text-sm text-gray-500 hover:text-[#00d4ff] transition">
+            See all demo sites with live agents →
+          </a>
         </motion.div>
       </div>
     </section>
