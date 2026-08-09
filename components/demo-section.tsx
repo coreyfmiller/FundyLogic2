@@ -271,7 +271,7 @@ export function DemoSection() {
                       <div className="flex items-center justify-center h-full">
                         <div className="text-center px-4">
                           <MessageCircle className="w-5 h-5 text-[#00d4ff]/40 mx-auto mb-2" />
-                          <p className="text-[11px] text-gray-500">Enter your business above and<br/>hit Deploy to activate the agent.</p>
+                          <p className="text-[11px] text-gray-500">Waiting to deploy agent.</p>
                         </div>
                       </div>
                     ) : !isDeployed ? (
