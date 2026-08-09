@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { DemoSection } from '@/components/demo-section'
@@ -61,18 +61,49 @@ function Hero() {
   const [phraseIndex, setPhraseIndex] = useState(0)
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
+  const [bootComplete, setBootComplete] = useState(false)
+  const [bootLine, setBootLine] = useState(0)
+
+  const bootSequence = [
+    '> Initializing FundyLogic...',
+    '> Loading conversation engine...',
+    '> Connecting lead capture...',
+    '> Deploying AI agents...',
+    '> System online.',
+  ]
+
+  // Check if user has seen boot before
+  useEffect(() => {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('bootSeen')) {
+      setBootComplete(true)
+      return
+    }
+
+    let line = 0
+    const interval = setInterval(() => {
+      line++
+      setBootLine(line)
+      if (line >= bootSequence.length) {
+        clearInterval(interval)
+        setTimeout(() => {
+          setBootComplete(true)
+          sessionStorage.setItem('bootSeen', '1')
+        }, 800)
+      }
+    }, 500)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
+    if (!bootComplete) return
     const currentPhrase = phrases[phraseIndex]
 
     if (!isDeleting && displayText === currentPhrase) {
-      // Pause before deleting
       const timer = setTimeout(() => setIsDeleting(true), 2500)
       return () => clearTimeout(timer)
     }
 
     if (isDeleting && displayText === '') {
-      // Move to next phrase
       setIsDeleting(false)
       setPhraseIndex((prev) => (prev + 1) % phrases.length)
       return
@@ -86,7 +117,7 @@ function Hero() {
     }, speed)
 
     return () => clearTimeout(timer)
-  }, [displayText, isDeleting, phraseIndex, phrases])
+  }, [displayText, isDeleting, phraseIndex, phrases, bootComplete])
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
@@ -94,37 +125,70 @@ function Hero() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#00d4ff]/5 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#00d4ff]/3 blur-[80px] pointer-events-none" />
 
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={stagger}
-        className="max-w-4xl mx-auto px-4 text-center relative z-10"
-      >
-        <motion.p variants={fadeUp} className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
-          AI Agents for Small Business
-        </motion.p>
-        <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
-          AI That Works While You<br />
-          <span className="text-[#00d4ff] glow-text">
-            {displayText}
-            <span className="inline-block w-[3px] h-[0.9em] bg-[#00d4ff] ml-1 animate-pulse align-middle" />
-          </span>
-        </motion.h1>
-        <motion.p variants={fadeUp} className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
-        </motion.p>
-        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
-            Analyze Your Website Free
-          </a>
-          <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
-            Book a Discovery Call
-          </a>
+      {/* Boot sequence overlay */}
+      <AnimatePresence>
+        {!bootComplete && (
+          <motion.div
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 z-20 flex items-center justify-center bg-[#0a0a0f]"
+          >
+            <div className="font-mono text-sm space-y-2 px-6 max-w-md">
+              {bootSequence.slice(0, bootLine).map((line, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={i === bootSequence.length - 1 && bootLine >= bootSequence.length ? 'text-[#00d4ff]' : 'text-[#00d4ff]/60'}
+                >
+                  {line}
+                </motion.p>
+              ))}
+              {bootLine < bootSequence.length && (
+                <p className="text-[#00d4ff]">
+                  <span className="animate-pulse">▊</span>
+                </p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main hero content */}
+      {bootComplete && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto px-4 text-center relative z-10"
+        >
+          <p className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
+            AI Agents for Small Business
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+            AI That Works While You<br />
+            <span className="text-[#00d4ff] glow-text">
+              {displayText}
+              <span className="inline-block w-[3px] h-[0.9em] bg-[#00d4ff] ml-1 animate-pulse align-middle" />
+            </span>
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
+              Analyze Your Website Free
+            </a>
+            <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
+              Book a Discovery Call
+            </a>
+          </div>
+          <div className="mt-16">
+            <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
+          </div>
         </motion.div>
-        <motion.div variants={fadeUp} className="mt-16">
-          <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
-        </motion.div>
-      </motion.div>
+      )}
     </section>
   )
 }
