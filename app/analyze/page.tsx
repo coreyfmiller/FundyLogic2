@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, Loader2, Globe, Shield, ArrowRight, AlertCircle, MessageCircle, CheckCircle, XCircle, MinusCircle, FileText, HelpCircle, Mail, Sparkles } from 'lucide-react'
+import { Search, Loader2, Globe, Shield, ArrowRight, AlertCircle, MessageCircle, CheckCircle, XCircle, MinusCircle, FileText, HelpCircle, Mail } from 'lucide-react'
 
 interface ScoreItem {
   score: number
@@ -199,6 +199,51 @@ export default function AnalyzePage() {
                   <span>{result.platform}</span>
                 </div>
               </div>
+              <p className="text-xs text-gray-500">
+                Pages analyzed: {result.pagesAnalyzed.join(', ')}
+              </p>
+            </div>
+
+            {/* Scores */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <ScoreCard label="Response Capability" sublabel="Can visitors get answers?" score={result.analysis.scores.responseCapability} />
+              <ScoreCard label="Lead Capture" sublabel="How easy is it to become a lead?" score={result.analysis.scores.leadCapture} />
+              <ScoreCard label="Content Completeness" sublabel="Is key info easy to find?" score={result.analysis.scores.contentCompleteness} />
+              <ScoreCard label="AI Readiness" sublabel="How trainable is the content?" score={result.analysis.scores.aiReadiness} />
+            </div>
+
+            {/* Email capture - PRIMARY CTA, right after scores deliver value */}
+            <div className="glass-card rounded-2xl p-6 sm:p-8 border-[#00d4ff]/20">
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-[#00d4ff] flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="text-base font-bold text-white mb-1">Send me the full breakdown</h3>
+                  <p className="text-xs text-gray-500 mb-3">Get this assessment with all recommendations delivered to your inbox.</p>
+                  {emailSent ? (
+                    <div className="flex items-center gap-2 text-sm text-[#00d4ff]">
+                      <CheckCircle className="w-4 h-4" /> Sent! Check your inbox.
+                    </div>
+                  ) : (
+                    <form onSubmit={handleEmailReport} className="flex gap-2 max-w-sm">
+                      <input
+                        type="email"
+                        required
+                        value={emailInput}
+                        onChange={e => setEmailInput(e.target.value)}
+                        placeholder="your@email.com"
+                        className="flex-1 bg-[#0a0a0f] border border-[#1f1f2e] rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
+                      />
+                      <button
+                        type="submit"
+                        disabled={emailSending}
+                        className="px-4 py-2.5 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-50 flex-shrink-0"
+                      >
+                        {emailSending ? 'Sending...' : 'Send'}
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Pages found vs missing */}
@@ -220,14 +265,6 @@ export default function AnalyzePage() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Scores */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <ScoreCard label="Response Capability" sublabel="Can visitors get answers?" score={result.analysis.scores.responseCapability} />
-              <ScoreCard label="Lead Capture" sublabel="How easy is it to become a lead?" score={result.analysis.scores.leadCapture} />
-              <ScoreCard label="Content Completeness" sublabel="Is key info easy to find?" score={result.analysis.scores.contentCompleteness} />
-              <ScoreCard label="AI Readiness" sublabel="How trainable is the content?" score={result.analysis.scores.aiReadiness} />
             </div>
 
             {/* Observations */}
@@ -294,65 +331,21 @@ export default function AnalyzePage() {
               </div>
             </div>
 
-            {/* Try Your Agent - Mini Demo */}
-            <div className="glass-card rounded-2xl p-6 sm:p-8 border-[#00d4ff]/10">
-              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#00d4ff]" /> Try an Agent Trained on Your Site
-              </h3>
-              <p className="text-xs text-gray-500 mb-4">Chat with an AI that knows what's on your website right now.</p>
-              <a
-                href={`/#demo`}
-                onClick={() => {
-                  // Store the business type for the demo
-                  if (result.analysis) {
-                    sessionStorage.setItem('demoBusinessType', `${result.analysis.businessType} in ${result.analysis.businessName}`)
-                  }
-                }}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#1f1f2e] border border-[#2a2a3e] text-white text-sm font-medium hover:border-[#00d4ff]/50 transition"
-              >
-                <MessageCircle className="w-4 h-4 text-[#00d4ff]" />
-                Open Demo Chat
-              </a>
-            </div>
-
-            {/* Email Report */}
-            <div className="glass-card rounded-2xl p-6 sm:p-8">
-              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#00d4ff]" /> Save This Report
-              </h3>
-              <p className="text-xs text-gray-500 mb-4">Get a copy of this assessment sent to your inbox.</p>
-              {emailSent ? (
-                <div className="flex items-center gap-2 text-sm text-[#00d4ff]">
-                  <CheckCircle className="w-4 h-4" /> Report sent! Check your inbox.
-                </div>
-              ) : (
-                <form onSubmit={handleEmailReport} className="flex gap-2 max-w-md">
-                  <input
-                    type="email"
-                    required
-                    value={emailInput}
-                    onChange={e => setEmailInput(e.target.value)}
-                    placeholder="your@email.com"
-                    className="flex-1 bg-[#0a0a0f] border border-[#1f1f2e] rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
-                  />
-                  <button
-                    type="submit"
-                    disabled={emailSending}
-                    className="px-4 py-2.5 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-50"
-                  >
-                    {emailSending ? 'Sending...' : 'Email Report'}
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Recommendation + CTA */}
+            {/* Recommendation + FINAL CTA - catches high-intent */}
             <div className="glass-card rounded-2xl p-6 sm:p-8 border-[#00d4ff]/20 glow-cyan">
               <h3 className="text-lg font-bold text-white mb-3">Our Take</h3>
               <p className="text-sm text-gray-300 leading-relaxed mb-6">{result.analysis.recommendation}</p>
-              <a href="/#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00d4ff] text-black font-semibold hover:bg-[#00b8e6] transition text-sm">
-                Let's talk about your agent <ArrowRight className="w-4 h-4" />
-              </a>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <a href="/#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00d4ff] text-black font-semibold hover:bg-[#00b8e6] transition text-sm">
+                  Let's talk about your agent <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href="/#demo"
+                  className="text-xs text-gray-500 hover:text-[#00d4ff] transition"
+                >
+                  or try a demo agent first →
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
