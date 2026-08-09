@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, ExternalLink, MessageCircle, Zap, CheckCircle } from 'lucide-react'
-import Image from 'next/image'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -96,11 +95,9 @@ export default function AIReadySitesPage() {
             >
               {/* Screenshot */}
               <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
+                <img
                   src={site.image}
                   alt={`${site.name} website`}
-                  width={800}
-                  height={500}
                   className="object-cover object-top w-full h-full group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent opacity-60" />
