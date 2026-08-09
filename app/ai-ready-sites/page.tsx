@@ -75,10 +75,10 @@ export default function AIReadySitesPage() {
         {/* Hero */}
         <motion.div initial="hidden" animate="visible" variants={stagger} className="text-center mb-16">
           <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-            Websites built for AI. Not just for looks.
+            Websites built for AI.<br className="hidden sm:block" /> Looks are just a bonus.
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Every site below was built to support a live AI agent. The content is structured for training. The pages answer real questions. The agent works because the site gives it something to work with.
+            These sites are designed to look great AND power an AI agent. The content is structured for training. The pages answer real questions. The agent works because the site gives it something to work with.
           </motion.p>
         </motion.div>
 
