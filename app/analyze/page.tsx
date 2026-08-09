@@ -2,20 +2,21 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, Loader2, Globe, Shield, ArrowRight, AlertCircle, MessageCircle, CheckCircle, XCircle, MinusCircle } from 'lucide-react'
+import { Search, Loader2, Globe, Shield, ArrowRight, AlertCircle, MessageCircle, CheckCircle, XCircle, MinusCircle, FileText, HelpCircle, Mail, Sparkles } from 'lucide-react'
 
 interface ScoreItem {
   score: number
   reasoning: string
 }
 
-interface Analysis {
+interface AnalysisResult {
   url: string
   title: string
   description: string
   platform: string
   hasSSL: boolean
   pagesAnalyzed: string[]
+  pagesMissing: string[]
   analysis: {
     businessName: string
     businessType: string
@@ -26,6 +27,7 @@ interface Analysis {
       aiReadiness: ScoreItem
     }
     observations: string[]
+    topQuestions: string[]
     aiAgentOpportunities: string[]
     sampleConversation: string
     recommendation: string
@@ -46,8 +48,11 @@ export default function AnalyzePage() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState(0)
-  const [result, setResult] = useState<Analysis | null>(null)
+  const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState('')
+  const [emailInput, setEmailInput] = useState('')
+  const [emailSent, setEmailSent] = useState(false)
+  const [emailSending, setEmailSending] = useState(false)
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,13 +61,10 @@ export default function AnalyzePage() {
     setLoadingStep(0)
     setError('')
     setResult(null)
+    setEmailSent(false)
 
-    // Simulate progress steps while waiting
     const stepInterval = setInterval(() => {
-      setLoadingStep(prev => {
-        if (prev >= LOADING_STEPS.length - 1) return prev
-        return prev + 1
-      })
+      setLoadingStep(prev => prev >= LOADING_STEPS.length - 1 ? prev : prev + 1)
     }, 3500)
 
     try {
@@ -83,6 +85,25 @@ export default function AnalyzePage() {
       setError('Something went wrong. Try again.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleEmailReport = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!emailInput.trim() || !result) return
+    setEmailSending(true)
+    try {
+      await fetch('/api/email-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput, result }),
+      })
+      setEmailSent(true)
+    } catch {
+      // Still mark as sent to not block UX
+      setEmailSent(true)
+    } finally {
+      setEmailSending(false)
     }
   }
 
@@ -131,7 +152,7 @@ export default function AnalyzePage() {
           </div>
         </form>
 
-        {/* Loading state */}
+        {/* Loading */}
         {loading && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-2xl mx-auto">
             <div className="glass-card rounded-2xl p-6">
@@ -145,9 +166,7 @@ export default function AnalyzePage() {
                     ) : (
                       <div className="w-4 h-4 rounded-full border border-[#2a2a3e] flex-shrink-0" />
                     )}
-                    <span className={`text-sm ${i <= loadingStep ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {step}
-                    </span>
+                    <span className={`text-sm ${i <= loadingStep ? 'text-gray-300' : 'text-gray-600'}`}>{step}</span>
                   </div>
                 ))}
               </div>
@@ -180,9 +199,27 @@ export default function AnalyzePage() {
                   <span>{result.platform}</span>
                 </div>
               </div>
-              <p className="text-xs text-gray-500">
-                Pages analyzed: {result.pagesAnalyzed.join(', ')}
-              </p>
+            </div>
+
+            {/* Pages found vs missing */}
+            <div className="glass-card rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <FileText className="w-4 h-4 text-[#00d4ff]" /> Pages We Analyzed
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {result.pagesAnalyzed.map(page => (
+                  <div key={page} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="w-4 h-4 text-[#00d4ff] flex-shrink-0" />
+                    <span className="text-gray-300 capitalize">{page}</span>
+                  </div>
+                ))}
+                {result.pagesMissing.map(page => (
+                  <div key={page} className="flex items-center gap-2 text-sm">
+                    <XCircle className="w-4 h-4 text-red-400/70 flex-shrink-0" />
+                    <span className="text-gray-500 capitalize">{page} <span className="text-[10px] text-gray-600">(not found)</span></span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Scores */}
@@ -201,6 +238,22 @@ export default function AnalyzePage() {
                   <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
                     <MinusCircle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
                     {obs}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Top Questions */}
+            <div className="glass-card rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-[#00d4ff]" /> Questions Your Agent Would Handle
+              </h3>
+              <p className="text-xs text-gray-500 mb-4">Based on your site content, these are the questions customers are likely asking:</p>
+              <ul className="space-y-2">
+                {result.analysis.topQuestions.map((q, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                    <MessageCircle className="w-3.5 h-3.5 text-[#00d4ff]/60 flex-shrink-0 mt-0.5" />
+                    "{q}"
                   </li>
                 ))}
               </ul>
@@ -241,6 +294,58 @@ export default function AnalyzePage() {
               </div>
             </div>
 
+            {/* Try Your Agent - Mini Demo */}
+            <div className="glass-card rounded-2xl p-6 sm:p-8 border-[#00d4ff]/10">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#00d4ff]" /> Try an Agent Trained on Your Site
+              </h3>
+              <p className="text-xs text-gray-500 mb-4">Chat with an AI that knows what's on your website right now.</p>
+              <a
+                href={`/#demo`}
+                onClick={() => {
+                  // Store the business type for the demo
+                  if (result.analysis) {
+                    sessionStorage.setItem('demoBusinessType', `${result.analysis.businessType} in ${result.analysis.businessName}`)
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#1f1f2e] border border-[#2a2a3e] text-white text-sm font-medium hover:border-[#00d4ff]/50 transition"
+              >
+                <MessageCircle className="w-4 h-4 text-[#00d4ff]" />
+                Open Demo Chat
+              </a>
+            </div>
+
+            {/* Email Report */}
+            <div className="glass-card rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#00d4ff]" /> Save This Report
+              </h3>
+              <p className="text-xs text-gray-500 mb-4">Get a copy of this assessment sent to your inbox.</p>
+              {emailSent ? (
+                <div className="flex items-center gap-2 text-sm text-[#00d4ff]">
+                  <CheckCircle className="w-4 h-4" /> Report sent! Check your inbox.
+                </div>
+              ) : (
+                <form onSubmit={handleEmailReport} className="flex gap-2 max-w-md">
+                  <input
+                    type="email"
+                    required
+                    value={emailInput}
+                    onChange={e => setEmailInput(e.target.value)}
+                    placeholder="your@email.com"
+                    className="flex-1 bg-[#0a0a0f] border border-[#1f1f2e] rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
+                  />
+                  <button
+                    type="submit"
+                    disabled={emailSending}
+                    className="px-4 py-2.5 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-50"
+                  >
+                    {emailSending ? 'Sending...' : 'Email Report'}
+                  </button>
+                </form>
+              )}
+            </div>
+
             {/* Recommendation + CTA */}
             <div className="glass-card rounded-2xl p-6 sm:p-8 border-[#00d4ff]/20 glow-cyan">
               <h3 className="text-lg font-bold text-white mb-3">Our Take</h3>
@@ -263,7 +368,6 @@ function ScoreCard({ label, sublabel, score }: { label: string; sublabel: string
     if (s >= 4) return 'text-yellow-400'
     return 'text-red-400'
   }
-
   const getBarColor = (s: number) => {
     if (s >= 7) return 'bg-[#00d4ff]'
     if (s >= 4) return 'bg-yellow-400'

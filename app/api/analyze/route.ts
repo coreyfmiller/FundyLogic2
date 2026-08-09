@@ -142,6 +142,8 @@ export async function POST(req: NextRequest) {
     }
 
     const pagesFound = Object.keys(pages)
+    const pagesSearched = ['homepage', 'services', 'about', 'contact', 'faq']
+    const pagesMissing = pagesSearched.filter(p => !pagesFound.includes(p))
     const pagesSummary = pagesFound.join(', ')
 
     // Step 3: AI analysis with structured scoring
@@ -155,6 +157,7 @@ SSL: ${hasSSL}
 Title: ${title}
 Description: ${description}
 Pages analyzed: ${pagesSummary}
+Pages not found: ${pagesMissing.join(', ') || 'none'}
 
 PAGE CONTENT:
 ${Object.entries(pages).map(([key, content]) => `--- ${key.toUpperCase()} ---\n${content}`).join('\n\n')}
@@ -184,6 +187,9 @@ Return ONLY a valid JSON object (no markdown, no code fences):
   "observations": [
     "3-5 factual observations about gaps or opportunities. Each must be something you can see from the page content. Never invent numbers. Examples: 'No way to engage visitors outside business hours', 'Contact form has 6 fields which adds friction', 'No FAQ section to address common questions', 'Services are listed but pricing requires a phone call'"
   ],
+  "topQuestions": [
+    "5-7 questions that real customers would likely ask this business based on the content you see. These are questions an AI agent would handle. Be specific to THIS business. e.g. 'Do you service the Quispamsis area?', 'How much does a roof inspection cost?', 'Can you come this week for an emergency?'"
+  ],
   "aiAgentOpportunities": [
     "3-4 specific ways an AI agent would help THIS business based on what you see"
   ],
@@ -212,6 +218,7 @@ Return ONLY a valid JSON object (no markdown, no code fences):
       platform,
       hasSSL,
       pagesAnalyzed: pagesFound,
+      pagesMissing,
       analysis,
     })
   } catch (err) {
