@@ -499,12 +499,6 @@ function RecentWork() {
             </motion.a>
           ))}
         </motion.div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center mt-8">
-          <a href="/ai-ready-sites" className="text-sm text-gray-500 hover:text-[#00d4ff] transition">
-            See all demo sites with live agents →
-          </a>
-        </motion.div>
       </div>
     </section>
   )
