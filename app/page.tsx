@@ -464,8 +464,8 @@ function RecentWork() {
           variants={stagger}
           className="text-center mb-16"
         >
-          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Recent Work</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400">AI-ready sites with live agents. Click to explore.</motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Live Examples</motion.h2>
+          <motion.p variants={fadeUp} className="text-gray-400">Real sites with real agents. Built to show what yours could look like.</motion.p>
         </motion.div>
 
         <motion.div
