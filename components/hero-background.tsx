@@ -68,23 +68,27 @@ export function HeroBackground() {
       />
 
       {/* Dot accents */}
-      {[...Array(6)].map((_, i) => (
+      {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1.5 h-1.5 rounded-full bg-[#00d4ff]/30"
+          className="absolute w-px h-px rounded-full bg-[#00d4ff]"
           style={{
-            top: `${20 + i * 12}%`,
-            left: `${15 + (i * 17) % 70}%`,
+            top: `${15 + i * 10}%`,
+            left: `${10 + (i * 13) % 80}%`,
           }}
           animate={{
-            opacity: [0.3, 0.7, 0.3],
-            scale: [1, 1.5, 1],
+            opacity: [0, 0.4, 0],
+            boxShadow: [
+              '0 0 0px rgba(0, 212, 255, 0)',
+              '0 0 6px rgba(0, 212, 255, 0.5)',
+              '0 0 0px rgba(0, 212, 255, 0)',
+            ],
           }}
           transition={{
-            duration: 4 + i,
+            duration: 3 + i * 0.5,
             repeat: Infinity,
             ease: 'easeInOut',
-            delay: i * 0.8,
+            delay: i * 1.2,
           }}
         />
       ))}
