@@ -27,7 +27,7 @@ export function HeroBackground() {
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Animated orbs */}
       <motion.div
-        className="absolute top-1/2 left-1/2 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px]"
+        className="absolute top-1/2 left-1/2 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.08] blur-[100px]"
         animate={{
           x: ['-50%', '-45%', '-55%', '-50%'],
           y: ['-50%', '-55%', '-45%', '-50%'],
@@ -37,7 +37,7 @@ export function HeroBackground() {
         style={{ translate: 'var(--mouse-x, 0px) var(--mouse-y, 0px)' }}
       />
       <motion.div
-        className="absolute top-1/4 right-1/4 w-[350px] h-[350px] rounded-full bg-[#00d4ff]/[0.03] blur-[80px]"
+        className="absolute top-1/4 right-1/4 w-[350px] h-[350px] rounded-full bg-[#00d4ff]/[0.06] blur-[80px]"
         animate={{
           x: ['0%', '5%', '-3%', '0%'],
           y: ['0%', '-8%', '5%', '0%'],
@@ -46,7 +46,7 @@ export function HeroBackground() {
         transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
       />
       <motion.div
-        className="absolute bottom-1/3 left-1/4 w-[250px] h-[250px] rounded-full bg-[#00d4ff]/[0.025] blur-[60px]"
+        className="absolute bottom-1/3 left-1/4 w-[250px] h-[250px] rounded-full bg-[#00d4ff]/[0.05] blur-[60px]"
         animate={{
           x: ['0%', '-6%', '4%', '0%'],
           y: ['0%', '6%', '-4%', '0%'],
@@ -56,7 +56,7 @@ export function HeroBackground() {
 
       {/* Subtle grid that shifts with mouse */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: `
             linear-gradient(rgba(0, 212, 255, 0.5) 1px, transparent 1px),
@@ -72,13 +72,13 @@ export function HeroBackground() {
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-[#00d4ff]/20"
+          className="absolute w-1.5 h-1.5 rounded-full bg-[#00d4ff]/30"
           style={{
             top: `${20 + i * 12}%`,
             left: `${15 + (i * 17) % 70}%`,
           }}
           animate={{
-            opacity: [0.2, 0.5, 0.2],
+            opacity: [0.3, 0.7, 0.3],
             scale: [1, 1.5, 1],
           }}
           transition={{
