@@ -57,6 +57,37 @@ function Navbar() {
 }
 
 function Hero() {
+  const phrases = ['Sleep', 'Drive to the job site', 'Coach your kid\'s hockey', 'Take a weekend off', 'Focus on real work', 'Close other deals']
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [displayText, setDisplayText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const currentPhrase = phrases[phraseIndex]
+
+    if (!isDeleting && displayText === currentPhrase) {
+      // Pause before deleting
+      const timer = setTimeout(() => setIsDeleting(true), 2500)
+      return () => clearTimeout(timer)
+    }
+
+    if (isDeleting && displayText === '') {
+      // Move to next phrase
+      setIsDeleting(false)
+      setPhraseIndex((prev) => (prev + 1) % phrases.length)
+      return
+    }
+
+    const speed = isDeleting ? 40 : 80
+    const timer = setTimeout(() => {
+      setDisplayText(prev =>
+        isDeleting ? prev.slice(0, -1) : currentPhrase.slice(0, prev.length + 1)
+      )
+    }, speed)
+
+    return () => clearTimeout(timer)
+  }, [displayText, isDeleting, phraseIndex, phrases])
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
       {/* Gradient orb background */}
@@ -67,38 +98,30 @@ function Hero() {
         initial="hidden"
         animate="visible"
         variants={stagger}
-        className="max-w-6xl mx-auto px-4 relative z-10 w-full"
+        className="max-w-4xl mx-auto px-4 text-center relative z-10"
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Copy + CTAs */}
-          <div className="text-center lg:text-left">
-            <motion.p variants={fadeUp} className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
-              AI Agents for Small Business
-            </motion.p>
-            <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              AI That Works<br />
-              <span className="text-[#00d4ff] glow-text">While You Sleep</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg text-gray-400 max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
-              Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-              <a href="/analyze" className="px-7 py-3.5 rounded-lg bg-[#00d4ff] text-black font-bold hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
-                Analyze Your Website Free
-              </a>
-              <a href="#contact" className="px-7 py-3.5 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
-                Book a Discovery Call
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Right: Live agent demo */}
-          <motion.div variants={fadeUp} className="hidden lg:block">
-            <HeroChat />
-          </motion.div>
-        </div>
-
-        <motion.div variants={fadeUp} className="mt-12 lg:mt-16 text-center">
+        <motion.p variants={fadeUp} className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
+          AI Agents for Small Business
+        </motion.p>
+        <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+          AI That Works While You<br />
+          <span className="text-[#00d4ff] glow-text">
+            {displayText}
+            <span className="inline-block w-[3px] h-[0.9em] bg-[#00d4ff] ml-1 animate-pulse align-middle" />
+          </span>
+        </motion.h1>
+        <motion.p variants={fadeUp} className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+          Custom-built AI agents that live on your website. They answer questions, qualify leads, and follow up automatically. You wake up to booked calls.
+        </motion.p>
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
+            Analyze Your Website Free
+          </a>
+          <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
+            Book a Discovery Call
+          </a>
+        </motion.div>
+        <motion.div variants={fadeUp} className="mt-16">
           <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
         </motion.div>
       </motion.div>
