@@ -445,12 +445,12 @@ function Stats() {
 
 function RecentWork() {
   const projects = [
-    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app' },
-    { name: 'Summit Roofing NB', description: 'Roofing', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-ten.vercel.app' },
-    { name: 'Spark Electric', description: 'Electrical', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-blue.vercel.app' },
-    { name: 'Greenstone Landscaping', description: 'Landscaping', result: 'Seasonal services + estimate scheduling', link: 'https://greenstone-rho.vercel.app' },
-    { name: 'Pristine Auto Detailing', description: 'Auto Detailing', result: 'Package comparisons + mobile booking', link: 'https://pristine-chi.vercel.app' },
-    { name: 'Crystal Clear Cleaning', description: 'Cleaning Services', result: 'Recurring plans + service area coverage', link: 'https://crystal-clear-olive.vercel.app' },
+    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app', image: '/showcase/atlantic-plumbing.png' },
+    { name: 'Summit Roofing NB', description: 'Roofing', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-ten.vercel.app', image: '/showcase/summit-roofing.png' },
+    { name: 'Spark Electric', description: 'Electrical', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-blue.vercel.app', image: '/showcase/spark-electric.png' },
+    { name: 'Greenstone Landscaping', description: 'Landscaping', result: 'Seasonal services + estimate scheduling', link: 'https://greenstone-rho.vercel.app', image: '/showcase/greenstone.png' },
+    { name: 'Pristine Auto Detailing', description: 'Auto Detailing', result: 'Package comparisons + mobile booking', link: 'https://pristine-chi.vercel.app', image: '/showcase/pristine.png' },
+    { name: 'Crystal Clear Cleaning', description: 'Cleaning Services', result: 'Recurring plans + service area coverage', link: 'https://crystal-clear-olive.vercel.app', image: '/showcase/crystal-clear.png' },
   ]
 
   return (
@@ -481,11 +481,20 @@ function RecentWork() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-card rounded-xl p-6 hover:border-[#00d4ff]/20 transition group"
+              className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group"
             >
-              <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{project.name}</h3>
-              <p className="text-sm text-gray-500 mb-3">{project.description}</p>
-              <p className="text-sm text-[#00d4ff]">{project.result}</p>
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={`${project.name} website`}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="text-base font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{project.name}</h3>
+                <p className="text-xs text-gray-500 mb-2">{project.description}</p>
+                <p className="text-xs text-[#00d4ff]">{project.result}</p>
+              </div>
             </motion.a>
           ))}
         </motion.div>
