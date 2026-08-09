@@ -575,8 +575,8 @@ function Pricing() {
                 ))}
               </ul>
               <a
-                href="#contact"
-                className={`w-full py-3.5 rounded-lg font-semibold text-center transition ${
+                href={tier.highlight ? '/ai-ready-sites' : '#contact'}
+                className={`w-full py-3.5 rounded-lg font-semibold text-center transition block ${
                   tier.highlight
                     ? 'bg-[#00d4ff] text-black hover:bg-[#00b8e6]'
                     : 'bg-[#1f1f2e] text-white hover:bg-[#2a2a3e]'
