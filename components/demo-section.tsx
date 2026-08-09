@@ -290,7 +290,7 @@ export function DemoSection() {
                   className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full bg-[#00d4ff] text-black text-xs font-semibold hover:bg-[#00b8e6] transition"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  Build this for my business
+                  Let's customize yours
                 </a>
               </div>
             </div>
