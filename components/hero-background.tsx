@@ -68,9 +68,9 @@ export function HeroBackground() {
 
       {/* EFFECT: Scan lines */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.12]"
         style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.3) 2px, rgba(0, 212, 255, 0.3) 3px)',
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.4) 2px, rgba(0, 212, 255, 0.4) 3px)',
           backgroundSize: '100% 4px',
           animation: 'scanlines 8s linear infinite',
         }}
