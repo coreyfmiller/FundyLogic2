@@ -146,29 +146,7 @@ export function DemoSection() {
           </motion.p>
         </motion.div>
 
-        {/* Business input */}
-        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-xl mx-auto mb-8">
-          <form onSubmit={handleDeploy} className="flex items-center gap-2">
-            <div className="flex-1 relative">
-              <input
-                value={businessInput}
-                onChange={e => setBusinessInput(e.target.value)}
-                placeholder="e.g. plumbing company in Moncton"
-                className="w-full bg-[#111118] border border-[#1f1f2e] rounded-xl px-5 py-3.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
-                disabled={isTraining && !isDeployed}
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={!businessInput.trim() || (isTraining && !isDeployed)}
-              className="px-5 py-3.5 rounded-xl bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-40 flex items-center gap-2 flex-shrink-0"
-            >
-              Deploy Agent <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
-        </motion.div>
-
-        {/* Browser frame - always visible */}
+        {/* Main frame */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -176,18 +154,26 @@ export function DemoSection() {
           viewport={{ once: true }}
           className="rounded-2xl border border-[#1f1f2e] overflow-hidden shadow-2xl shadow-[#00d4ff]/5 max-w-5xl mx-auto"
         >
-              {/* Browser chrome */}
-              <div className="bg-[#0a0a0f] border-b border-[#1f1f2e] px-4 py-3 flex items-center gap-3">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-                </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="bg-[#1f1f2e] rounded-lg px-4 py-1.5 text-xs text-gray-400 min-w-[220px] text-center">
-                    your-business.com
+              {/* Header with deploy input */}
+              <div className="bg-[#0a0a0f] border-b border-[#1f1f2e] px-4 py-3">
+                <form onSubmit={handleDeploy} className="flex items-center gap-2">
+                  <div className="flex-1">
+                    <input
+                      value={businessInput}
+                      onChange={e => setBusinessInput(e.target.value)}
+                      placeholder="e.g. plumbing company in Moncton"
+                      className="w-full bg-[#1f1f2e] border border-[#2a2a3e] rounded-lg px-4 py-2.5 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
+                      disabled={isTraining && !isDeployed}
+                    />
                   </div>
-                </div>
+                  <button
+                    type="submit"
+                    disabled={!businessInput.trim() || (isTraining && !isDeployed)}
+                    className="px-4 py-2.5 rounded-lg bg-[#00d4ff] text-black text-xs font-semibold hover:bg-[#00b8e6] transition disabled:opacity-40 flex items-center gap-1.5 flex-shrink-0"
+                  >
+                    Deploy Agent <ArrowRight className="w-3 h-3" />
+                  </button>
+                </form>
               </div>
 
               {/* Main content */}
