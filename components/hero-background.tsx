@@ -25,33 +25,32 @@ export function HeroBackground() {
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Animated orbs */}
+      {/* Animated fog layers */}
       <motion.div
-        className="absolute top-1/2 left-1/2 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.08] blur-[100px]"
+        className="absolute -top-1/4 -left-1/4 w-[150%] h-[80%] rounded-full bg-[#00d4ff]/[0.06] blur-[150px]"
         animate={{
-          x: ['-50%', '-45%', '-55%', '-50%'],
-          y: ['-50%', '-55%', '-45%', '-50%'],
-          scale: [1, 1.1, 0.95, 1],
+          x: ['-5%', '3%', '-2%', '-5%'],
+          y: ['0%', '5%', '-3%', '0%'],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ translate: 'var(--mouse-x, 0px) var(--mouse-y, 0px)' }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute top-1/4 right-1/4 w-[350px] h-[350px] rounded-full bg-[#00d4ff]/[0.06] blur-[80px]"
+        className="absolute -bottom-1/4 -right-1/4 w-[120%] h-[70%] rounded-full bg-[#00d4ff]/[0.05] blur-[130px]"
+        animate={{
+          x: ['0%', '-4%', '2%', '0%'],
+          y: ['0%', '-5%', '3%', '0%'],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+      />
+      <motion.div
+        className="absolute top-1/3 left-1/3 w-[60%] h-[50%] rounded-full bg-[#00d4ff]/[0.04] blur-[120px]"
         animate={{
           x: ['0%', '5%', '-3%', '0%'],
-          y: ['0%', '-8%', '5%', '0%'],
-          scale: [1, 0.9, 1.05, 1],
+          y: ['0%', '-4%', '6%', '0%'],
+          scale: [1, 1.15, 0.9, 1],
         }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 left-1/4 w-[250px] h-[250px] rounded-full bg-[#00d4ff]/[0.05] blur-[60px]"
-        animate={{
-          x: ['0%', '-6%', '4%', '0%'],
-          y: ['0%', '6%', '-4%', '0%'],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 7 }}
+        style={{ translate: 'var(--mouse-x, 0px) var(--mouse-y, 0px)' }}
       />
 
       {/* Subtle grid that shifts with mouse */}
