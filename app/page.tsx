@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState } from 'react'
 import { DemoSection } from '@/components/demo-section'
-import { HeroBackground } from '@/components/hero-background'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -60,7 +59,9 @@ function Navbar() {
 function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      <HeroBackground />
+      {/* Gradient orb background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#00d4ff]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#00d4ff]/3 blur-[80px] pointer-events-none" />
 
       <motion.div
         initial="hidden"
