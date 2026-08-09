@@ -1,5 +1,6 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google'
 import { streamText } from 'ai'
+import { showcaseAgents } from '@/lib/showcase-agents'
 
 export const maxDuration = 30
 
@@ -46,9 +47,19 @@ Remember: You're showing what's possible. Make the visitor think "I want this on
 }
 
 export async function POST(req: Request) {
-  const { messages, businessType, industry } = await req.json()
+  const { messages, businessType, industry, showcaseId } = await req.json()
 
-  // Support both new (businessType) and legacy (industry) format
+  // If a showcase agent is specified, use its custom prompt
+  if (showcaseId && showcaseAgents[showcaseId]) {
+    const result = streamText({
+      model: google('gemini-2.5-flash'),
+      system: showcaseAgents[showcaseId].system,
+      messages,
+    })
+    return result.toTextStreamResponse()
+  }
+
+  // Otherwise use the generic demo prompt
   const business = businessType || industry || 'small business'
   const systemPrompt = buildSystemPrompt(business)
 
