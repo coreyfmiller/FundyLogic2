@@ -180,8 +180,8 @@ function Hero() {
             <a href="/analyze" className="px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20">
               Analyze Your Website Free
             </a>
-            <a href="#contact" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
-              Book a Discovery Call
+            <a href="#demo" className="px-8 py-4 rounded-lg border border-[#1f1f2e] text-gray-300 font-semibold hover:border-[#00d4ff]/50 hover:text-white transition">
+              See It in Action
             </a>
           </div>
           <div className="mt-16">
