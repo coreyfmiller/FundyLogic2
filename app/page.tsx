@@ -124,31 +124,47 @@ function Hero() {
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
       {/* Animated gradient clouds */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[#00d4ff]/[0.07] blur-[150px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[#00d4ff]/[0.09] blur-[160px] pointer-events-none"
         animate={{
-          scale: [1, 1.1, 0.95, 1],
-          x: ['-50%', '-47%', '-53%', '-50%'],
-          y: ['-50%', '-53%', '-47%', '-50%'],
+          scale: [1, 1.15, 0.9, 1.05, 1],
+          x: ['-50%', '-45%', '-55%', '-48%', '-50%'],
+          y: ['-50%', '-55%', '-45%', '-52%', '-50%'],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.05] blur-[120px] pointer-events-none"
+        className="absolute -top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#00d4ff]/[0.06] blur-[130px] pointer-events-none"
         animate={{
-          scale: [1, 0.9, 1.1, 1],
-          x: ['0%', '4%', '-3%', '0%'],
-          y: ['0%', '-5%', '3%', '0%'],
+          scale: [1, 0.85, 1.1, 0.95, 1],
+          x: ['0%', '6%', '-4%', '3%', '0%'],
+          y: ['0%', '-6%', '4%', '-2%', '0%'],
         }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
       />
       <motion.div
-        className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px] pointer-events-none"
+        className="absolute bottom-[5%] -left-[10%] w-[550px] h-[550px] rounded-full bg-[#00d4ff]/[0.05] blur-[120px] pointer-events-none"
         animate={{
-          scale: [1, 1.15, 0.9, 1],
-          x: ['0%', '-4%', '5%', '0%'],
-          y: ['0%', '4%', '-3%', '0%'],
+          scale: [1, 1.2, 0.85, 1.1, 1],
+          x: ['0%', '-5%', '6%', '-3%', '0%'],
+          y: ['0%', '5%', '-4%', '2%', '0%'],
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 7 }}
+        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
+      />
+      <motion.div
+        className="absolute top-[15%] left-[10%] w-[350px] h-[350px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px] pointer-events-none"
+        animate={{
+          scale: [1, 1.3, 0.8, 1],
+          opacity: [0.04, 0.07, 0.03, 0.04],
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
+      />
+      <motion.div
+        className="absolute bottom-[20%] right-[15%] w-[300px] h-[300px] rounded-full bg-[#00d4ff]/[0.03] blur-[80px] pointer-events-none"
+        animate={{
+          scale: [1, 0.7, 1.2, 1],
+          opacity: [0.03, 0.06, 0.02, 0.03],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
       />
 
       {/* Boot sequence overlay */}
