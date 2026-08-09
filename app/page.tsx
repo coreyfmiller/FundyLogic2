@@ -122,49 +122,42 @@ function Hero() {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Animated gradient clouds */}
+      {/* Animated gradient clouds - CRANKED */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[#00d4ff]/[0.09] blur-[160px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 w-[1000px] h-[1000px] rounded-full bg-[#00d4ff]/[0.12] blur-[180px] pointer-events-none"
         animate={{
-          scale: [1, 1.15, 0.9, 1.05, 1],
-          x: ['-50%', '-45%', '-55%', '-48%', '-50%'],
-          y: ['-50%', '-55%', '-45%', '-52%', '-50%'],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute -top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#00d4ff]/[0.06] blur-[130px] pointer-events-none"
-        animate={{
-          scale: [1, 0.85, 1.1, 0.95, 1],
-          x: ['0%', '6%', '-4%', '3%', '0%'],
-          y: ['0%', '-6%', '4%', '-2%', '0%'],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      />
-      <motion.div
-        className="absolute bottom-[5%] -left-[10%] w-[550px] h-[550px] rounded-full bg-[#00d4ff]/[0.05] blur-[120px] pointer-events-none"
-        animate={{
+          x: ['-50%', '-40%', '-60%', '-45%', '-50%'],
+          y: ['-50%', '-60%', '-40%', '-55%', '-50%'],
           scale: [1, 1.2, 0.85, 1.1, 1],
-          x: ['0%', '-5%', '6%', '-3%', '0%'],
-          y: ['0%', '5%', '-4%', '2%', '0%'],
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute top-[15%] left-[10%] w-[350px] h-[350px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px] pointer-events-none"
+        className="absolute -top-[20%] -right-[20%] w-[700px] h-[700px] rounded-full bg-[#00d4ff]/[0.08] blur-[140px] pointer-events-none"
         animate={{
-          scale: [1, 1.3, 0.8, 1],
-          opacity: [0.04, 0.07, 0.03, 0.04],
+          x: ['0%', '-30%', '10%', '-15%', '0%'],
+          y: ['0%', '20%', '-10%', '15%', '0%'],
+          scale: [1, 0.8, 1.3, 0.9, 1],
         }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
+        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
       />
       <motion.div
-        className="absolute bottom-[20%] right-[15%] w-[300px] h-[300px] rounded-full bg-[#00d4ff]/[0.03] blur-[80px] pointer-events-none"
+        className="absolute -bottom-[15%] -left-[15%] w-[650px] h-[650px] rounded-full bg-[#00d4ff]/[0.07] blur-[130px] pointer-events-none"
         animate={{
-          scale: [1, 0.7, 1.2, 1],
-          opacity: [0.03, 0.06, 0.02, 0.03],
+          x: ['0%', '25%', '-10%', '15%', '0%'],
+          y: ['0%', '-20%', '15%', '-10%', '0%'],
+          scale: [1, 1.25, 0.8, 1.15, 1],
         }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+        transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut', delay: 6 }}
+      />
+      {/* Sweeper - one cloud that clearly moves across */}
+      <motion.div
+        className="absolute top-[30%] w-[500px] h-[400px] rounded-full bg-[#00d4ff]/[0.06] blur-[120px] pointer-events-none"
+        animate={{
+          x: ['-20%', '100%'],
+          opacity: [0, 0.08, 0.06, 0.08, 0],
+        }}
+        transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* Boot sequence overlay */}
