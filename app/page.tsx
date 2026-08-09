@@ -194,98 +194,6 @@ function Hero() {
   )
 }
 
-function HeroChat() {
-  const [visibleMessages, setVisibleMessages] = useState(0)
-
-  const conversation = [
-    { role: 'agent', text: "Hi! Welcome to Fundy Roofing. How can I help you today?" },
-    { role: 'visitor', text: "Do you do emergency leak repairs in Saint John?" },
-    { role: 'agent', text: "We do, 24/7 across greater Saint John. Is the leak active right now?" },
-    { role: 'visitor', text: "Yes, dripping into the kitchen." },
-    { role: 'agent', text: "Understood. I can get a crew out tonight between 7-9pm. What number should they text on the way?" },
-    { role: 'visitor', text: "506-555-0142" },
-    { role: 'agent', text: "Got it. Someone will text you within 30 minutes to confirm. Hang tight!" },
-  ]
-
-  useEffect(() => {
-    if (visibleMessages >= conversation.length) return
-    const delay = visibleMessages === 0 ? 1000 : (conversation[visibleMessages - 1].role === 'agent' ? 1800 : 1200)
-    const timer = setTimeout(() => setVisibleMessages(v => v + 1), delay)
-    return () => clearTimeout(timer)
-  }, [visibleMessages, conversation.length])
-
-  // Restart loop
-  useEffect(() => {
-    if (visibleMessages >= conversation.length) {
-      const timer = setTimeout(() => setVisibleMessages(0), 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [visibleMessages, conversation.length])
-
-  return (
-    <div className="w-full max-w-[340px] ml-auto rounded-2xl border border-[#1f1f2e] overflow-hidden shadow-2xl shadow-[#00d4ff]/5 bg-[#111118]">
-      {/* Chat header */}
-      <div className="px-4 py-3 border-b border-[#1f1f2e] flex items-center gap-2 bg-[#0a0a0f]">
-        <div className="w-7 h-7 rounded-full bg-[#00d4ff]/10 flex items-center justify-center">
-          <MessageSquare className="w-3.5 h-3.5 text-[#00d4ff]" />
-        </div>
-        <div>
-          <p className="text-xs font-semibold text-white">Fundy Assistant</p>
-          <p className="text-[10px] text-gray-500 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            Online now
-          </p>
-        </div>
-        <span className="ml-auto text-[9px] text-gray-600 bg-[#1f1f2e] px-2 py-0.5 rounded">9:47 PM</span>
-      </div>
-
-      {/* Messages */}
-      <div className="p-3 space-y-2 min-h-[280px] max-h-[320px] overflow-hidden">
-        {conversation.slice(0, visibleMessages).map((msg, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`flex ${msg.role === 'visitor' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed ${
-              msg.role === 'visitor'
-                ? 'bg-[#00d4ff] text-black rounded-br-sm'
-                : 'bg-[#1f1f2e] text-gray-200 rounded-bl-sm'
-            }`}>
-              {msg.text}
-            </div>
-          </motion.div>
-        ))}
-        {visibleMessages < conversation.length && visibleMessages > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`flex ${conversation[visibleMessages].role === 'visitor' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div className="rounded-2xl px-3.5 py-2 bg-[#1f1f2e] flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse" />
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse [animation-delay:0.2s]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse [animation-delay:0.4s]" />
-            </div>
-          </motion.div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <div className="px-3 pb-3">
-        <div className="flex items-center gap-2 bg-[#0a0a0f] rounded-full border border-[#1f1f2e] px-3.5 py-2">
-          <span className="text-xs text-gray-600 flex-1">Type a message...</span>
-          <div className="w-6 h-6 rounded-full bg-[#00d4ff]/20 flex items-center justify-center">
-            <ArrowRight className="w-3 h-3 text-[#00d4ff]" />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function SocialProof() {
   return (
     <section className="py-12 border-y border-[#1f1f2e]">
@@ -752,14 +660,16 @@ function Footer() {
   return (
     <footer className="py-12 border-t border-[#1f1f2e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="FundyLogic" className="h-6" />
-        </div>
+        </a>
         <div className="flex items-center gap-6 text-sm text-gray-500">
           <a href="#services" className="hover:text-white transition">Services</a>
-          <a href="#work" className="hover:text-white transition">Work</a>
-          <a href="/blog" className="hover:text-white transition">Blog</a>
+          <a href="#demo" className="hover:text-white transition">Demo</a>
+          <a href="#work" className="hover:text-white transition">Examples</a>
           <a href="/analyze" className="hover:text-white transition">Free Audit</a>
+          <a href="/ai-ready-sites" className="hover:text-white transition">AI-Ready Sites</a>
+          <a href="/blog" className="hover:text-white transition">Blog</a>
         </div>
         <p className="text-sm text-gray-600">Built in New Brunswick, Canada</p>
       </div>

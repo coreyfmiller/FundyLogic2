@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ChatWidget } from '@/components/chat/chat-widget'
 import { StructuredData } from '@/components/structured-data'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://fundylogic.com'),
@@ -20,20 +21,11 @@ export const metadata: Metadata = {
     siteName: 'FundyLogic',
     title: 'FundyLogic — AI Agents for Small Business',
     description: 'Custom-built AI agents that qualify leads, answer questions 24/7, and automate follow-up.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'FundyLogic — AI Agents for Small Business',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'FundyLogic — AI Agents for Small Business',
     description: 'Custom-built AI agents that qualify leads, answer questions 24/7, and automate follow-up.',
-    images: ['/og-image.png'],
   },
   alternates: {
     canonical: 'https://fundylogic.com',
@@ -53,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData />
         {children}
         <ChatWidget />
+        <Analytics />
       </body>
     </html>
   )
