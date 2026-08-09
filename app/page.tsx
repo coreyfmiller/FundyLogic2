@@ -122,10 +122,34 @@ function Hero() {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Gradient orb background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[#00d4ff]/[0.07] blur-[150px] pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.05] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px] pointer-events-none" />
+      {/* Animated gradient clouds */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[#00d4ff]/[0.07] blur-[150px] pointer-events-none"
+        animate={{
+          scale: [1, 1.1, 0.95, 1],
+          x: ['-50%', '-47%', '-53%', '-50%'],
+          y: ['-50%', '-53%', '-47%', '-50%'],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00d4ff]/[0.05] blur-[120px] pointer-events-none"
+        animate={{
+          scale: [1, 0.9, 1.1, 1],
+          x: ['0%', '4%', '-3%', '0%'],
+          y: ['0%', '-5%', '3%', '0%'],
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full bg-[#00d4ff]/[0.04] blur-[100px] pointer-events-none"
+        animate={{
+          scale: [1, 1.15, 0.9, 1],
+          x: ['0%', '-4%', '5%', '0%'],
+          y: ['0%', '4%', '-3%', '0%'],
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 7 }}
+      />
 
       {/* Boot sequence overlay */}
       <AnimatePresence>
