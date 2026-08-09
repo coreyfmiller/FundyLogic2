@@ -66,21 +66,60 @@ export function HeroBackground() {
         }}
       />
 
-      {/* EFFECT: Scan lines */}
-      <div
-        className="absolute inset-0 opacity-[0.12]"
-        style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.4) 2px, rgba(0, 212, 255, 0.4) 3px)',
-          backgroundSize: '100% 4px',
-          animation: 'scanlines 8s linear infinite',
-        }}
-      />
+      {/* EFFECT: Connection lines / constellation */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.15]">
+        {[
+          { x1: '15%', y1: '20%', x2: '35%', y2: '35%' },
+          { x1: '35%', y1: '35%', x2: '55%', y2: '25%' },
+          { x1: '55%', y1: '25%', x2: '75%', y2: '40%' },
+          { x1: '75%', y1: '40%', x2: '85%', y2: '20%' },
+          { x1: '25%', y1: '60%', x2: '45%', y2: '70%' },
+          { x1: '45%', y1: '70%', x2: '65%', y2: '55%' },
+          { x1: '65%', y1: '55%', x2: '80%', y2: '75%' },
+        ].map((line, i) => (
+          <motion.line
+            key={i}
+            x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+            stroke="#00d4ff"
+            strokeWidth="0.5"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: [0, 0.6, 0.6, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              delay: i * 1.2,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+        {[
+          { cx: '15%', cy: '20%' },
+          { cx: '35%', cy: '35%' },
+          { cx: '55%', cy: '25%' },
+          { cx: '75%', cy: '40%' },
+          { cx: '85%', cy: '20%' },
+          { cx: '25%', cy: '60%' },
+          { cx: '45%', cy: '70%' },
+          { cx: '65%', cy: '55%' },
+          { cx: '80%', cy: '75%' },
+        ].map((dot, i) => (
+          <motion.circle
+            key={`dot-${i}`}
+            cx={dot.cx} cy={dot.cy} r="2"
+            fill="#00d4ff"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.8, 0.8, 0] }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              delay: i * 0.8,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </svg>
 
       <style jsx>{`
-        @keyframes scanlines {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(32px); }
-        }
       `}</style>
     </div>
   )
