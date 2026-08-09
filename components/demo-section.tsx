@@ -136,9 +136,9 @@ export function DemoSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="text-center mb-12"
+          className="text-center mb-6"
         >
-          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-2">
             See it in action.
           </motion.h2>
           <motion.p variants={fadeUp} className="text-gray-400 max-w-lg mx-auto">
