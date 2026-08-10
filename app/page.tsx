@@ -734,17 +734,20 @@ function CTA() {
                   placeholder="Your website URL (so we can look at it before the call)"
                   className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
                 />
-                <select
-                  required
-                  value={form.budget}
-                  onChange={e => setForm(f => ({ ...f, budget: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white focus:outline-none focus:border-[#00d4ff]/50 transition appearance-none"
-                >
-                  <option value="" disabled className="text-gray-600">What are you looking for?</option>
-                  <option value="agent-only">AI Agent on my existing site ($2,500-$5,500)</option>
-                  <option value="agent-site">AI Agent + New Website ($8,000-$12,000)</option>
-                  <option value="not-sure">Not sure yet, just exploring</option>
-                </select>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">What are you looking for?</label>
+                  <select
+                    required
+                    value={form.budget}
+                    onChange={e => setForm(f => ({ ...f, budget: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white focus:outline-none focus:border-[#00d4ff]/50 transition appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300d4ff%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10"
+                  >
+                    <option value="" disabled className="text-gray-600">Select one...</option>
+                    <option value="agent-only">AI Agent on my existing site ($2,500-$5,500)</option>
+                    <option value="agent-site">AI Agent + New Website ($8,000-$12,000)</option>
+                    <option value="not-sure">Not sure yet, just exploring</option>
+                  </select>
+                </div>
                 <textarea
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
