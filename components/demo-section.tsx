@@ -163,7 +163,7 @@ export function DemoSection() {
                 value={businessInput}
                 onChange={e => setBusinessInput(e.target.value)}
                 placeholder="What kind of business do you run?"
-                className="flex-1 bg-[#0a0a0f] border border-[#00d4ff]/30 rounded-lg px-4 py-3 text-base text-white placeholder:text-white/50 focus:outline-none focus:border-[#00d4ff] transition shadow-[0_0_15px_rgba(0,212,255,0.15)] focus:shadow-[0_0_25px_rgba(0,212,255,0.3)]"
+                className="flex-1 bg-[#0a0a0f] border border-[#00d4ff]/30 rounded-lg px-4 py-3 text-lg text-white placeholder:text-[#00d4ff]/70 placeholder:font-medium focus:outline-none focus:border-[#00d4ff] transition shadow-[0_0_15px_rgba(0,212,255,0.15)] focus:shadow-[0_0_25px_rgba(0,212,255,0.3)]"
                 disabled={isTraining && !isDeployed}
               />
               <button
