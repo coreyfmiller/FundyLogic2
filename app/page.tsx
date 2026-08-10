@@ -475,7 +475,7 @@ function RecentWork() {
           variants={stagger}
           className="mt-20 text-center"
         >
-          <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2">Also Built by Us</motion.p>
+          <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2">Our SaaS Products</motion.p>
           <motion.h3 variants={fadeUp} className="text-2xl font-bold text-white mb-3">Products We Shipped</motion.h3>
           <motion.p variants={fadeUp} className="text-gray-400 mb-10 max-w-lg mx-auto">Full-stack SaaS platforms we designed, built, and launched from scratch.</motion.p>
         </motion.div>
