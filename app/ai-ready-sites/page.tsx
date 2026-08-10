@@ -68,6 +68,33 @@ const showcaseSites = [
     greeting: "Hi! Crystal Clear Cleaning here. Need a clean home or office? Ask me about services or booking.",
     agentHandles: ['Recurring plan questions', 'Instant quote requests', 'Service area coverage'],
   },
+  {
+    name: 'Riverstone Renovations',
+    industry: 'Renovations',
+    image: '/showcase/riverstone.png',
+    url: 'https://riverstone-five.vercel.app',
+    showcaseId: 'riverstone-renovations',
+    greeting: "Hi! Riverstone Renovations here. Thinking about a kitchen, bathroom, or basement reno? Let's talk.",
+    agentHandles: ['Project scope questions', 'In-home consultation booking', 'Timeline estimates'],
+  },
+  {
+    name: 'Harbour Realty',
+    industry: 'Real Estate',
+    image: '/showcase/harbour.png',
+    url: 'https://harbour-phi.vercel.app',
+    showcaseId: 'harbour-realty',
+    greeting: "Welcome to Harbour Realty! Looking to buy or sell on the coast? I can help you get started.",
+    agentHandles: ['Property search help', 'Market evaluation requests', 'Buyer consultation booking'],
+  },
+  {
+    name: 'Maritime Pest Management',
+    industry: 'Pest Control',
+    image: '/showcase/maritime-pest.png',
+    url: 'https://maritime-pest.vercel.app',
+    showcaseId: 'maritime-pest',
+    greeting: "Hi! Maritime Pest Management here. Dealing with an unwanted guest? Tell me what's going on.",
+    agentHandles: ['Emergency pest response', 'Free inspection booking', 'Treatment plan questions'],
+  },
 ]
 
 export default function AIReadySitesPage() {

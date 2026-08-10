@@ -394,6 +394,9 @@ function RecentWork() {
     { name: 'Greenstone Landscaping', description: 'Landscaping', result: 'Seasonal services + estimate scheduling', link: 'https://greenstone-ruby.vercel.app', image: '/showcase/greenstone.png' },
     { name: 'Pristine Auto Detailing', description: 'Auto Detailing', result: 'Package comparisons + mobile booking', link: 'https://pristine-sooty-gamma.vercel.app', image: '/showcase/pristine.png' },
     { name: 'Crystal Clear Cleaning', description: 'Cleaning Services', result: 'Recurring plans + service area coverage', link: 'https://crystal-clear-pink.vercel.app', image: '/showcase/crystal-clear.png' },
+    { name: 'Riverstone Renovations', description: 'Renovations', result: 'Project scoping + consultation booking', link: 'https://riverstone-five.vercel.app', image: '/showcase/riverstone.png' },
+    { name: 'Harbour Realty', description: 'Real Estate', result: 'Property search + seller consultations', link: 'https://harbour-phi.vercel.app', image: '/showcase/harbour.png' },
+    { name: 'Maritime Pest Management', description: 'Pest Control', result: 'Emergency response + inspection booking', link: 'https://maritime-pest.vercel.app', image: '/showcase/maritime-pest.png' },
   ]
 
   return (
