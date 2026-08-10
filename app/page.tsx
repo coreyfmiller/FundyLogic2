@@ -23,6 +23,13 @@ export default function Home() {
       <Services />
       <HowItWorks />
       <DemoSection />
+      {/* Bridge CTA */}
+      <div className="py-12 text-center border-t border-[#1f1f2e]">
+        <p className="text-lg text-gray-400 mb-4">Like what you see?</p>
+        <a href="#contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold hover:bg-[#00b8e6] transition">
+          Get One for Your Business <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
       <Stats />
       <RecentWork />
       <Testimonials />
@@ -50,7 +57,7 @@ function Navbar() {
           <a href="/analyze" className="hover:text-white transition">Free Audit</a>
         </div>
         <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition">
-          Book a Call <ArrowRight className="w-4 h-4" />
+          Book a Consultation <ArrowRight className="w-4 h-4" />
         </a>
       </div>
     </nav>
@@ -540,7 +547,7 @@ function Pricing() {
                 ))}
               </ul>
               <a
-                href={tier.highlight ? '/ai-ready-sites' : '#contact'}
+                href="#contact"
                 className={`w-full py-3.5 rounded-lg font-semibold text-center transition block ${
                   tier.highlight
                     ? 'bg-[#00d4ff] text-black hover:bg-[#00b8e6]'
@@ -603,7 +610,7 @@ function FAQ() {
 }
 
 function CTA() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', company: '', budget: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -617,7 +624,7 @@ function CTA() {
       })
       if (res.ok) {
         setStatus('sent')
-        setForm({ name: '', email: '', company: '', message: '' })
+        setForm({ name: '', email: '', company: '', budget: '', message: '' })
       } else {
         setStatus('error')
       }
@@ -668,6 +675,17 @@ function CTA() {
                   placeholder="Your website URL (so we can look at it before the call)"
                   className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#00d4ff]/50 transition"
                 />
+                <select
+                  required
+                  value={form.budget}
+                  onChange={e => setForm(f => ({ ...f, budget: e.target.value }))}
+                  className="w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-[#1f1f2e] text-white focus:outline-none focus:border-[#00d4ff]/50 transition appearance-none"
+                >
+                  <option value="" disabled className="text-gray-600">What are you looking for?</option>
+                  <option value="agent-only">AI Agent on my existing site ($2,500-$5,500)</option>
+                  <option value="agent-site">AI Agent + New Website ($8,000-$12,000)</option>
+                  <option value="not-sure">Not sure yet, just exploring</option>
+                </select>
                 <textarea
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
@@ -696,19 +714,26 @@ function CTA() {
 function Footer() {
   return (
     <footer className="py-12 border-t border-[#1f1f2e]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        <a href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="FundyLogic" className="h-6" />
-        </a>
-        <div className="flex items-center gap-6 text-sm text-gray-500">
-          <a href="#services" className="hover:text-white transition">Services</a>
-          <a href="#demo" className="hover:text-white transition">Demo</a>
-          <a href="#work" className="hover:text-white transition">Examples</a>
-          <a href="/analyze" className="hover:text-white transition">Free Audit</a>
-          <a href="/ai-ready-sites" className="hover:text-white transition">AI-Ready Sites</a>
-          <a href="/blog" className="hover:text-white transition">Blog</a>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center gap-4 mb-8 text-center">
+          <p className="text-gray-400">Ready to put AI to work for your business?</p>
+          <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00d4ff] text-black font-semibold hover:bg-[#00b8e6] transition">
+            Book a Consultation <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
-        <p className="text-sm text-gray-600">Built in New Brunswick, Canada</p>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-[#1f1f2e]">
+          <a href="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="FundyLogic" className="h-6" />
+          </a>
+          <div className="flex items-center gap-6 text-sm text-gray-500">
+            <a href="#services" className="hover:text-white transition">Services</a>
+            <a href="#demo" className="hover:text-white transition">Demo</a>
+            <a href="#work" className="hover:text-white transition">Examples</a>
+            <a href="/ai-ready-sites" className="hover:text-white transition">AI-Ready Sites</a>
+            <a href="/blog" className="hover:text-white transition">Blog</a>
+          </div>
+          <p className="text-sm text-gray-600">Built in New Brunswick, Canada</p>
+        </div>
       </div>
     </footer>
   )
