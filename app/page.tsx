@@ -53,7 +53,7 @@ function Navbar() {
           <a href="#demo" className="hover:text-white transition">Demo</a>
           <a href="#work" className="hover:text-white transition">Work</a>
           <a href="#pricing" className="hover:text-white transition">Pricing</a>
-          <a href="/blog" className="hover:text-white transition">Blog</a>
+          <a href="/ai-ready-sites" className="hover:text-white transition">AI-Ready Sites</a>
           <a href="/analyze" className="hover:text-white transition">Free Audit</a>
         </div>
         <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00d4ff] text-black text-sm font-semibold hover:bg-[#00b8e6] transition">
@@ -206,7 +206,7 @@ function Hero() {
           className="max-w-4xl mx-auto px-4 text-center relative z-10"
         >
           <p className="text-[#00d4ff] text-sm font-semibold tracking-widest uppercase mb-6">
-            AI Agents for Small Business
+            AI Agents and Modern Websites for Service Businesses
           </p>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
             AI That Works While You<br />
