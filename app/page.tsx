@@ -394,6 +394,11 @@ function Stats() {
 }
 
 function RecentWork() {
+  const products = [
+    { name: 'Duelly.ai', description: 'AI Visibility Intelligence', result: 'Multi-engine tracking across ChatGPT, Gemini, Perplexity', link: 'https://duelly.ai', image: '/showcase/duelly.jpg' },
+    { name: 'MarketMojo.ai', description: 'Local Business Prospecting', result: 'AI-powered SEO audits + branded PDF reports', link: 'https://marketmojo.ai', image: '/showcase/marketmojo.jpg' },
+  ]
+
   const projects = [
     { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app', image: '/showcase/atlantic-plumbing.png' },
     { name: 'Summit Roofing NB', description: 'Roofing', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-pied-nu.vercel.app', image: '/showcase/summit-roofing.png' },
@@ -417,9 +422,55 @@ function RecentWork() {
           className="text-center mb-16"
         >
           <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Live Examples</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400">Real sites with real agents. Built to show what yours could look like.</motion.p>
+          <motion.p variants={fadeUp} className="text-gray-400">Products we built and sites with live AI agents. See what yours could look like.</motion.p>
         </motion.div>
 
+        {/* Featured Products */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="grid md:grid-cols-2 gap-6 mb-12"
+        >
+          {products.map((product) => (
+            <motion.a
+              key={product.name}
+              variants={fadeUp}
+              href={product.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card rounded-xl overflow-hidden border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition group"
+            >
+              <div className="aspect-[16/9] overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={`${product.name} platform`}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-[#00d4ff]">SaaS Product</span>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{product.name}</h3>
+                <p className="text-sm text-gray-400 mb-2">{product.description}</p>
+                <p className="text-sm text-[#00d4ff]">{product.result}</p>
+              </div>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        {/* Demo Sites Grid */}
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-6"
+        >
+          AI-Ready Websites + Agents
+        </motion.p>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -731,6 +782,7 @@ function Footer() {
             <a href="#work" className="hover:text-white transition">Examples</a>
             <a href="/ai-ready-sites" className="hover:text-white transition">AI-Ready Sites</a>
             <a href="/blog" className="hover:text-white transition">Blog</a>
+            <a href="/privacy" className="hover:text-white transition">Privacy</a>
           </div>
           <p className="text-sm text-gray-600">Built in New Brunswick, Canada</p>
         </div>
