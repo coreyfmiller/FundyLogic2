@@ -425,42 +425,6 @@ function RecentWork() {
           <motion.p variants={fadeUp} className="text-gray-400">Products we built and sites with live AI agents. See what yours could look like.</motion.p>
         </motion.div>
 
-        {/* Featured Products */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="grid md:grid-cols-2 gap-6 mb-12"
-        >
-          {products.map((product) => (
-            <motion.a
-              key={product.name}
-              variants={fadeUp}
-              href={product.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card rounded-xl overflow-hidden border-[#00d4ff]/10 hover:border-[#00d4ff]/30 transition group"
-            >
-              <div className="aspect-[16/9] overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={`${product.name} platform`}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#00d4ff]">SaaS Product</span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{product.name}</h3>
-                <p className="text-sm text-gray-400 mb-2">{product.description}</p>
-                <p className="text-sm text-[#00d4ff]">{product.result}</p>
-              </div>
-            </motion.a>
-          ))}
-        </motion.div>
-
         {/* Demo Sites Grid */}
         <motion.p
           initial="hidden"
@@ -498,6 +462,50 @@ function RecentWork() {
                 <h3 className="text-base font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{project.name}</h3>
                 <p className="text-xs text-gray-500 mb-2">{project.description}</p>
                 <p className="text-xs text-[#00d4ff]">{project.result}</p>
+              </div>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        {/* SaaS Products */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="mt-20 text-center"
+        >
+          <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2">Also Built by Us</motion.p>
+          <motion.h3 variants={fadeUp} className="text-2xl font-bold text-white mb-3">Products We Shipped</motion.h3>
+          <motion.p variants={fadeUp} className="text-gray-400 mb-10 max-w-lg mx-auto">Full-stack SaaS platforms we designed, built, and launched from scratch.</motion.p>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="grid md:grid-cols-2 gap-6"
+        >
+          {products.map((product) => (
+            <motion.a
+              key={product.name}
+              variants={fadeUp}
+              href={product.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group"
+            >
+              <div className="aspect-[16/9] overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={`${product.name} platform`}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{product.name}</h3>
+                <p className="text-sm text-gray-400 mb-2">{product.description}</p>
+                <p className="text-sm text-[#00d4ff]">{product.result}</p>
               </div>
             </motion.a>
           ))}
