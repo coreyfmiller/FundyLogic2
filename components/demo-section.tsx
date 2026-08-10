@@ -155,20 +155,21 @@ export function DemoSection() {
           }`}
         >
           {/* Deploy bar */}
-          <div className="bg-[#0a0a0f] border-b border-[#1f1f2e] px-3 sm:px-5 py-3">
+          <div className="bg-[#0a0a0f] border-b border-[#1f1f2e] px-3 sm:px-5 py-4">
+            <p className="text-xs font-medium text-white/70 mb-2 tracking-wide">Try it. Type your business type.</p>
             <form onSubmit={handleDeploy} className="flex items-center gap-2 sm:gap-3">
-              <Terminal className="w-4 h-4 text-gray-600 flex-shrink-0 hidden sm:block" />
+              <Terminal className="w-4 h-4 text-[#00d4ff] flex-shrink-0 hidden sm:block" />
               <input
                 value={businessInput}
                 onChange={e => setBusinessInput(e.target.value)}
                 placeholder="What kind of business do you run?"
-                className="flex-1 bg-[#1f1f2e] border border-[#2a2a3e] rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#00d4ff]/50 transition"
+                className="flex-1 bg-[#0a0a0f] border border-[#00d4ff]/30 rounded-lg px-4 py-3 text-base text-white placeholder:text-white/50 focus:outline-none focus:border-[#00d4ff] transition shadow-[0_0_15px_rgba(0,212,255,0.15)] focus:shadow-[0_0_25px_rgba(0,212,255,0.3)]"
                 disabled={isTraining && !isDeployed}
               />
               <button
                 type="submit"
                 disabled={!businessInput.trim() || (isTraining && !isDeployed)}
-                className="px-4 sm:px-5 py-2.5 rounded-lg bg-[#00d4ff] text-black text-xs sm:text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-30 flex items-center gap-1.5 flex-shrink-0"
+                className="px-4 sm:px-5 py-3 rounded-lg bg-[#00d4ff] text-black text-xs sm:text-sm font-semibold hover:bg-[#00b8e6] transition disabled:opacity-30 flex items-center gap-1.5 flex-shrink-0"
               >
                 <span className="hidden sm:inline">Deploy</span> Agent <ArrowRight className="w-3.5 h-3.5" />
               </button>
