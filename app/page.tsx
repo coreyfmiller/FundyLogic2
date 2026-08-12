@@ -67,19 +67,10 @@ function Navbar() {
 function Hero() {
   const phrases = ['Drive to the job site', 'Coach your kid\'s hockey', 'Take a weekend off', 'Focus on real work', 'Close other deals', 'Sleep']
   const [phraseIndex, setPhraseIndex] = useState(0)
-  const [displayText, setDisplayText] = useState('Drive to the job site')
+  const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
-  const [hasStarted, setHasStarted] = useState(false)
 
   useEffect(() => {
-    // On first mount, show the full first phrase for 2.5s before starting animation
-    if (!hasStarted) {
-      const timer = setTimeout(() => {
-        setHasStarted(true)
-        setIsDeleting(true)
-      }, 2500)
-      return () => clearTimeout(timer)
-    }
 
     const currentPhrase = phrases[phraseIndex]
 
@@ -102,7 +93,7 @@ function Hero() {
     }, speed)
 
     return () => clearTimeout(timer)
-  }, [displayText, isDeleting, phraseIndex, phrases, hasStarted])
+  }, [displayText, isDeleting, phraseIndex, phrases])
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
