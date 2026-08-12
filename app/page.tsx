@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { DemoSection } from '@/components/demo-section'
@@ -19,9 +19,7 @@ export default function Home() {
     <div className="bg-grid">
       <Navbar />
       <Hero />
-      <SocialProof />
       <Services />
-      <HowItWorks />
       <DemoSection />
       {/* Bridge CTA */}
       <div className="py-12 text-center border-t border-[#1f1f2e]">
@@ -30,6 +28,8 @@ export default function Home() {
           Get One for Your Business <ArrowRight className="w-4 h-4" />
         </a>
       </div>
+      <SocialProof />
+      <HowItWorks />
       <Stats />
       <RecentWork />
       <Testimonials />
@@ -67,43 +67,20 @@ function Navbar() {
 function Hero() {
   const phrases = ['Drive to the job site', 'Coach your kid\'s hockey', 'Take a weekend off', 'Focus on real work', 'Close other deals', 'Sleep']
   const [phraseIndex, setPhraseIndex] = useState(0)
-  const [displayText, setDisplayText] = useState('')
+  const [displayText, setDisplayText] = useState('Drive to the job site')
   const [isDeleting, setIsDeleting] = useState(false)
-  const [bootComplete, setBootComplete] = useState(false)
-  const [bootLine, setBootLine] = useState(0)
+  const [hasStarted, setHasStarted] = useState(false)
 
-  const bootSequence = [
-    '> Initializing FundyLogic...',
-    '> Loading conversation engine...',
-    '> Connecting lead capture...',
-    '> Deploying AI agents...',
-    '> System online.',
-  ]
-
-  // Check if user has seen boot before
   useEffect(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem('bootSeen')) {
-      setBootComplete(true)
-      return
+    // On first mount, show the full first phrase for 2.5s before starting animation
+    if (!hasStarted) {
+      const timer = setTimeout(() => {
+        setHasStarted(true)
+        setIsDeleting(true)
+      }, 2500)
+      return () => clearTimeout(timer)
     }
 
-    let line = 0
-    const interval = setInterval(() => {
-      line++
-      setBootLine(line)
-      if (line >= bootSequence.length) {
-        clearInterval(interval)
-        setTimeout(() => {
-          setBootComplete(true)
-          sessionStorage.setItem('bootSeen', '1')
-        }, 800)
-      }
-    }, 500)
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    if (!bootComplete) return
     const currentPhrase = phrases[phraseIndex]
 
     if (!isDeleting && displayText === currentPhrase) {
@@ -125,7 +102,7 @@ function Hero() {
     }, speed)
 
     return () => clearTimeout(timer)
-  }, [displayText, isDeleting, phraseIndex, phrases, bootComplete])
+  }, [displayText, isDeleting, phraseIndex, phrases, hasStarted])
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
@@ -167,38 +144,9 @@ function Hero() {
         transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      {/* Boot sequence overlay */}
-      <AnimatePresence>
-        {!bootComplete && (
-          <motion.div
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="absolute inset-0 z-20 flex items-center justify-center bg-[#0a0a0f]"
-          >
-            <div className="font-mono text-sm space-y-2 px-6 max-w-md">
-              {bootSequence.slice(0, bootLine).map((line, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className={i === bootSequence.length - 1 && bootLine >= bootSequence.length ? 'text-[#00d4ff]' : 'text-[#00d4ff]/60'}
-                >
-                  {line}
-                </motion.p>
-              ))}
-              {bootLine < bootSequence.length && (
-                <p className="text-[#00d4ff]">
-                  <span className="animate-pulse">▊</span>
-                </p>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* Main hero content */}
-      {bootComplete && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -230,7 +178,6 @@ function Hero() {
             <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
           </div>
         </motion.div>
-      )}
     </section>
   )
 }
