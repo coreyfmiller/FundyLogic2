@@ -65,7 +65,7 @@ function Navbar() {
 }
 
 function Hero() {
-  const phrases = ['Sleep', 'Drive to the job site', 'Coach your kid\'s hockey', 'Take a weekend off', 'Focus on real work', 'Close other deals']
+  const phrases = ['Drive to the job site', 'Coach your kid\'s hockey', 'Take a weekend off', 'Focus on real work', 'Close other deals', 'Sleep']
   const [phraseIndex, setPhraseIndex] = useState(0)
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
