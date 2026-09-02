@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/next'
 export const metadata: Metadata = {
   metadataBase: new URL('https://fundylogic.com'),
   title: {
-    default: 'FundyLogic — AI Agents for Small Business',
+    default: 'FundyLogic, AI Agents for Small Business',
     template: '%s | FundyLogic',
   },
   description: 'Custom-built AI agents that live on your website. Qualify leads, answer questions 24/7, and automate follow-up. Built in New Brunswick, Canada.',
@@ -19,12 +19,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_CA',
     siteName: 'FundyLogic',
-    title: 'FundyLogic — AI Agents for Small Business',
+    title: 'FundyLogic, AI Agents for Small Business',
     description: 'Custom-built AI agents that qualify leads, answer questions 24/7, and automate follow-up.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FundyLogic — AI Agents for Small Business',
+    title: 'FundyLogic, AI Agents for Small Business',
     description: 'Custom-built AI agents that qualify leads, answer questions 24/7, and automate follow-up.',
   },
   alternates: {

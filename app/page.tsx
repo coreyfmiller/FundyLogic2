@@ -21,18 +21,11 @@ export default function Home() {
       <Hero />
       <Services />
       <DemoSection />
-      {/* Bridge CTA */}
-      <div className="py-12 text-center border-t border-[#1f1f2e]">
-        <p className="text-lg text-gray-400 mb-4">Like what you see?</p>
-        <a href="#contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold hover:bg-[#00b8e6] transition">
-          Get One for Your Business <ArrowRight className="w-4 h-4" />
-        </a>
-      </div>
       <SocialProof />
-      <HowItWorks />
-      <Stats />
       <RecentWork />
+      <HowItWorks />
       <Testimonials />
+      <Stats />
       <Pricing />
       <FAQ />
       <CTA />
@@ -193,6 +186,12 @@ function SocialProof() {
 function Services() {
   const services = [
     {
+      icon: Rocket,
+      title: 'AI-Ready Websites',
+      description: 'Modern sites built with structured data, semantic HTML, and clean architecture so AI agents can read, understand, and recommend your business.',
+      tag: null,
+    },
+    {
       icon: MessageSquare,
       title: 'AI Chat Agents',
       description: 'A custom-trained chat widget that greets visitors, answers questions in your voice, captures leads, and sends them to you qualified. Runs 24/7.',
@@ -231,7 +230,7 @@ function Services() {
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={stagger}
-          className="grid md:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {services.map((service) => (
             <motion.div
@@ -332,21 +331,21 @@ function Stats() {
 }
 
 function RecentWork() {
+  const projects = [
+    { name: 'Atlantic Plumbing & Heating', industry: 'Plumbing & HVAC', agent: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app', image: '/showcase/atlantic-plumbing.png' },
+    { name: 'Summit Roofing NB', industry: 'Roofing', agent: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-pied-nu.vercel.app', image: '/showcase/summit-roofing.png' },
+    { name: 'Spark Electric', industry: 'Electrical', agent: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-two.vercel.app', image: '/showcase/spark-electric.png' },
+    { name: 'Greenstone Landscaping', industry: 'Landscaping', agent: 'Seasonal services + estimate scheduling', link: 'https://greenstone-ruby.vercel.app', image: '/showcase/greenstone.png' },
+    { name: 'Pristine Auto Detailing', industry: 'Auto Detailing', agent: 'Package comparisons + mobile booking', link: 'https://pristine-sooty-gamma.vercel.app', image: '/showcase/pristine.png' },
+    { name: 'Crystal Clear Cleaning', industry: 'Cleaning Services', agent: 'Recurring plans + service area coverage', link: 'https://crystal-clear-pink.vercel.app', image: '/showcase/crystal-clear.png' },
+    { name: 'Riverstone Renovations', industry: 'Renovations', agent: 'Project scoping + consultation booking', link: 'https://riverstone-five.vercel.app', image: '/showcase/riverstone.png' },
+    { name: 'Harbour Realty', industry: 'Real Estate', agent: 'Property search + seller consultations', link: 'https://harbour-phi.vercel.app', image: '/showcase/harbour.png' },
+    { name: 'Maritime Pest Management', industry: 'Pest Control', agent: 'Emergency response + inspection booking', link: 'https://maritime-pest.vercel.app', image: '/showcase/maritime-pest.png' },
+  ]
+
   const products = [
     { name: 'Duelly.ai', description: 'AI Visibility Intelligence', result: 'Multi-engine tracking across ChatGPT, Gemini, Perplexity', link: 'https://duelly.ai', image: '/showcase/duelly.jpg' },
     { name: 'MarketMojo.ai', description: 'Local Business Prospecting', result: 'AI-powered SEO audits + branded PDF reports', link: 'https://marketmojo.ai', image: '/showcase/marketmojo.jpg' },
-  ]
-
-  const projects = [
-    { name: 'Atlantic Plumbing & Heating', description: 'Plumbing & HVAC', result: 'Emergency bookings + service area agent', link: 'https://atlantic-plumbing.vercel.app', image: '/showcase/atlantic-plumbing.png' },
-    { name: 'Summit Roofing NB', description: 'Roofing', result: 'Storm damage inquiries + inspection booking', link: 'https://summit-roofing-pied-nu.vercel.app', image: '/showcase/summit-roofing.png' },
-    { name: 'Spark Electric', description: 'Electrical', result: 'EV charger questions + panel upgrade quotes', link: 'https://spark-electric-two.vercel.app', image: '/showcase/spark-electric.png' },
-    { name: 'Greenstone Landscaping', description: 'Landscaping', result: 'Seasonal services + estimate scheduling', link: 'https://greenstone-ruby.vercel.app', image: '/showcase/greenstone.png' },
-    { name: 'Pristine Auto Detailing', description: 'Auto Detailing', result: 'Package comparisons + mobile booking', link: 'https://pristine-sooty-gamma.vercel.app', image: '/showcase/pristine.png' },
-    { name: 'Crystal Clear Cleaning', description: 'Cleaning Services', result: 'Recurring plans + service area coverage', link: 'https://crystal-clear-pink.vercel.app', image: '/showcase/crystal-clear.png' },
-    { name: 'Riverstone Renovations', description: 'Renovations', result: 'Project scoping + consultation booking', link: 'https://riverstone-five.vercel.app', image: '/showcase/riverstone.png' },
-    { name: 'Harbour Realty', description: 'Real Estate', result: 'Property search + seller consultations', link: 'https://harbour-phi.vercel.app', image: '/showcase/harbour.png' },
-    { name: 'Maritime Pest Management', description: 'Pest Control', result: 'Emergency response + inspection booking', link: 'https://maritime-pest.vercel.app', image: '/showcase/maritime-pest.png' },
   ]
 
   return (
@@ -360,19 +359,12 @@ function RecentWork() {
           className="text-center mb-16"
         >
           <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Live Examples</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400">Products we built and sites with live AI agents. See what yours could look like.</motion.p>
+          <motion.p variants={fadeUp} className="text-gray-400 max-w-2xl mx-auto">
+            Every site has a working AI agent. Click any example to chat with it yourself and see what yours could do.
+          </motion.p>
         </motion.div>
 
         {/* Demo Sites Grid */}
-        <motion.p
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-6"
-        >
-          AI-Ready Websites + Agents
-        </motion.p>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -387,66 +379,67 @@ function RecentWork() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group"
+              className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/30 transition group"
             >
-              <div className="aspect-[16/10] overflow-hidden">
+              <div className="aspect-[16/10] overflow-hidden relative">
                 <img
                   src={project.image}
                   alt={`${project.name} website`}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
+                <span className="absolute top-3 left-3 px-2.5 py-1 bg-[#0a0a0f]/80 backdrop-blur-sm border border-[#1f1f2e] rounded-full text-xs font-medium text-white">
+                  {project.industry}
+                </span>
               </div>
               <div className="p-5">
-                <h3 className="text-base font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{project.name}</h3>
-                <p className="text-xs text-gray-500 mb-2">{project.description}</p>
-                <p className="text-xs text-[#00d4ff]">{project.result}</p>
+                <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-[#00d4ff] transition">{project.name}</h3>
+                <p className="text-sm text-gray-400 mb-3">
+                  <MessageSquare className="inline w-3.5 h-3.5 mr-1 text-[#00d4ff]" />
+                  {project.agent}
+                </p>
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-[#00d4ff] group-hover:gap-2 transition-all">
+                  Try the AI Agent <ArrowRight className="w-3 h-3" />
+                </span>
               </div>
             </motion.a>
           ))}
         </motion.div>
 
-        {/* SaaS Products */}
+        {/* SaaS Products, Secondary */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={stagger}
-          className="mt-20 text-center"
+          className="mt-24 pt-16 border-t border-[#1f1f2e]/50"
         >
-          <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2">Our SaaS Products</motion.p>
-          <motion.h3 variants={fadeUp} className="text-2xl font-bold text-white mb-3">Products We Shipped</motion.h3>
-          <motion.p variants={fadeUp} className="text-gray-400 mb-10 max-w-lg mx-auto">Full-stack SaaS platforms we designed, built, and launched from scratch.</motion.p>
-        </motion.div>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          {products.map((product) => (
-            <motion.a
-              key={product.name}
-              variants={fadeUp}
-              href={product.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group"
-            >
-              <div className="aspect-[16/9] overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={`${product.name} platform`}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#00d4ff] transition">{product.name}</h3>
-                <p className="text-sm text-gray-400 mb-2">{product.description}</p>
-                <p className="text-sm text-[#00d4ff]">{product.result}</p>
-              </div>
-            </motion.a>
-          ))}
+          <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2 text-center">Also Built by Us</motion.p>
+          <motion.h3 variants={fadeUp} className="text-xl font-bold text-white mb-8 text-center">Our SaaS Products</motion.h3>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {products.map((product) => (
+              <motion.a
+                key={product.name}
+                variants={fadeUp}
+                href={product.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group flex items-center gap-4 p-4"
+              >
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                  <img
+                    src={product.image}
+                    alt={`${product.name} platform`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="text-sm font-bold text-white group-hover:text-[#00d4ff] transition">{product.name}</h4>
+                  <p className="text-xs text-gray-400">{product.description}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{product.result}</p>
+                </div>
+              </motion.a>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

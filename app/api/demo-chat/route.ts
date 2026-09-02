@@ -52,7 +52,7 @@ export async function POST(req: Request) {
   // If a showcase agent is specified, use its custom prompt
   if (showcaseId && showcaseAgents[showcaseId]) {
     const result = streamText({
-      model: google('gemini-2.5-flash'),
+      model: google('gemini-flash-latest'),
       system: showcaseAgents[showcaseId].system,
       messages,
     })
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
   const systemPrompt = buildSystemPrompt(business)
 
   const result = streamText({
-    model: google('gemini-2.5-flash'),
+    model: google('gemini-flash-latest'),
     system: systemPrompt,
     messages,
   })

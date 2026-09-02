@@ -148,7 +148,7 @@ export async function POST(req: NextRequest) {
 
     // Step 3: AI analysis with structured scoring
     const { text: aiResponse } = await generateText({
-      model: google('gemini-2.5-flash'),
+      model: google('gemini-flash-latest'),
       prompt: `You are an expert analyst assessing a business website for AI chat agent integration. Be factual. Only state things you can observe from the page content. Never invent statistics or numbers you cannot verify.
 
 Website: ${baseUrl}
