@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { DemoSection } from '@/components/demo-section'
+import { PRICING_TIERS } from '@/lib/business-info'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -477,38 +478,7 @@ function Testimonials() {
 }
 
 function Pricing() {
-  const tiers = [
-    {
-      name: 'Agent Only',
-      price: '$2,500 - $5,500',
-      description: 'Your site is solid. We deploy an AI agent on it.',
-      features: [
-        'Custom AI agent trained on your business',
-        'Installed on your existing website',
-        'Lead capture + email notifications',
-        'Voice agent option available',
-        '30 days of tuning included',
-        'Optional monthly support plan',
-      ],
-      cta: 'Get Started',
-      highlight: false,
-    },
-    {
-      name: 'Agent + AI-Ready Site',
-      price: '$8,000 - $12,000',
-      description: 'We rebuild your site for AI, then deploy the agent on top.',
-      features: [
-        'Everything in Agent Only',
-        'Full website rebuild (Next.js)',
-        'Content structured for AI training',
-        'SEO + AEO foundations built in',
-        'FAQ, services, and pricing pages optimized',
-        'The agent and the site work as one system',
-      ],
-      cta: 'Book a Discovery Call',
-      highlight: true,
-    },
-  ]
+  const tiers = PRICING_TIERS
 
   return (
     <section id="pricing" className="py-24 md:py-32 border-t border-[#1f1f2e]">

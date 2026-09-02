@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ExternalLink, MessageCircle, Zap, CheckCircle, Send, Loader2, X } from 'lucide-react'
+import { AI_READY_SITE_PRICE_NOTE } from '@/lib/business-info'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -288,7 +289,7 @@ export default function AIReadySitesPage() {
               ))}
             </div>
           </motion.div>
-          <p className="text-xs text-gray-600 mt-3">$8,000 - $12,000. Live in 3-4 weeks. One-time build.</p>
+          <p className="text-xs text-gray-600 mt-3">{AI_READY_SITE_PRICE_NOTE}</p>
         </motion.div>
 
         {/* CTA */}
