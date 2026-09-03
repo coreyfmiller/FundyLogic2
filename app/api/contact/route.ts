@@ -18,8 +18,27 @@ export async function POST(request: Request) {
       html: `<h2>New inquiry from FundyLogic.com</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p>${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}<p><strong>Message:</strong></p><p>${message}</p>`,
     })
 
+    // Also forward the lead to the Quadropus ops command center (best-effort; email is source of truth).
+    void forwardLeadToOps({ source: 'fundylogic', name, email, business: company, message })
+
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
+  }
+}
+
+async function forwardLeadToOps(lead: Record<string, unknown>) {
+  const endpoint = process.env.OPS_LEADS_URL
+  const token = process.env.LEADS_INGEST_TOKEN
+  if (!endpoint || !token) return
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(5000),
+    })
+  } catch {
+    // Ignore: ops forwarding is best-effort.
   }
 }
