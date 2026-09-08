@@ -137,11 +137,8 @@ export function DemoSection() {
           className="text-center mb-6"
         >
           <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-2">
-            See it in action.
+            See a custom chat bot in action
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400 text-sm sm:text-base">
-            Enter your business type. Watch an agent deploy. Then chat with it.
-          </motion.p>
         </motion.div>
 
         {/* Demo Frame */}

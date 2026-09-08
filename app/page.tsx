@@ -21,9 +21,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
-      <DemoSection />
-      <SocialProof />
       <RecentWork />
+      <DemoSection />
       <HowItWorks />
       <Testimonials />
       <Stats />
@@ -163,23 +162,6 @@ function Hero() {
             <ChevronDown className="w-6 h-6 text-gray-600 mx-auto animate-bounce" />
           </div>
         </motion.div>
-    </section>
-  )
-}
-
-function SocialProof() {
-  return (
-    <section className="py-12 border-y border-[#1f1f2e]">
-      <div className="max-w-5xl mx-auto px-4 text-center">
-        <p className="text-sm text-gray-500 mb-6 uppercase tracking-wide">Built for businesses across Atlantic Canada</p>
-        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-gray-500 text-sm font-medium">
-          <span>RP Miller Consulting</span>
-          <span>Atlantic Plumbing</span>
-          <span>Summit Roofing</span>
-          <span>Spark Electric</span>
-          <span>Crystal Clear Cleaning</span>
-        </div>
-      </div>
     </section>
   )
 }
@@ -416,7 +398,7 @@ function RecentWork() {
         >
           <motion.p variants={fadeUp} className="text-sm text-gray-500 uppercase tracking-widest font-semibold mb-2 text-center">Also Built by Us</motion.p>
           <motion.h3 variants={fadeUp} className="text-xl font-bold text-white mb-8 text-center">Our SaaS Products</motion.h3>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {products.map((product) => (
               <motion.a
                 key={product.name}
@@ -424,19 +406,19 @@ function RecentWork() {
                 href={product.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-card rounded-xl overflow-hidden hover:border-[#00d4ff]/20 transition group flex items-center gap-4 p-4"
+                className="glass-card rounded-2xl overflow-hidden hover:border-[#00d4ff]/30 transition group"
               >
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                <div className="aspect-[16/10] overflow-hidden relative">
                   <img
                     src={product.image}
                     alt={`${product.name} platform`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="min-w-0">
-                  <h4 className="text-sm font-bold text-white group-hover:text-[#00d4ff] transition">{product.name}</h4>
-                  <p className="text-xs text-gray-400">{product.description}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{product.result}</p>
+                <div className="p-6">
+                  <h4 className="text-xl font-bold text-white group-hover:text-[#00d4ff] transition mb-1.5">{product.name}</h4>
+                  <p className="text-sm text-[#00d4ff] font-medium mb-2">{product.description}</p>
+                  <p className="text-sm text-gray-400 leading-relaxed">{product.result}</p>
                 </div>
               </motion.a>
             ))}
