@@ -25,41 +25,14 @@ export type PricingTier = {
   highlight: boolean
 }
 
-export const PRICING_TIERS: PricingTier[] = [
-  {
-    name: 'Agent Only',
-    price: 'Starting at $5,000',
-    description: 'Your site is solid. We deploy a premium, custom AI agent on it.',
-    features: [
-      'Custom AI agent trained on your business',
-      'Installed on your existing website',
-      'Lead capture + email notifications',
-      'Voice agent option available',
-      '30 days of tuning included',
-      'Optional monthly support plan',
-    ],
-    cta: 'Get Started',
-    highlight: false,
-  },
-  {
-    name: 'Agent + AI-Ready Site',
-    price: 'Starting at $10,000',
-    description: 'We rebuild your site for AI, then deploy the agent on top.',
-    features: [
-      'Everything in Agent Only',
-      'Full website rebuild (Next.js)',
-      'Content structured for AI training',
-      'SEO + AEO foundations built in',
-      'FAQ, services, and pricing pages optimized',
-      'The agent and the site work as one system',
-    ],
-    cta: 'Book a Discovery Call',
-    highlight: true,
-  },
-]
+// NOTE: Public pricing numbers were intentionally removed. FundyLogic quotes every
+// project on a discovery call (custom, premium, one-time builds). Keep it numberless
+// on the site AND in both bots. If fixed pricing is ever reintroduced, restore a
+// PricingTier[] here and update BOT_SYSTEM_FACTS + the Vapi voice bot to match.
+export const PRICING_TIERS: PricingTier[] = []
 
 // Short pricing summary reused in prose spots (e.g. the ai-ready-sites page footnote).
-export const AI_READY_SITE_PRICE_NOTE = 'Starting at $10,000. Live in 3-4 weeks. One-time build.'
+export const AI_READY_SITE_PRICE_NOTE = 'Custom quoted. Live in 3-4 weeks. One-time build, you own everything.'
 
 /**
  * The canonical facts block injected into the CHAT bot's system prompt.
@@ -80,9 +53,8 @@ export const BOT_SYSTEM_FACTS = `WHAT WE BUILD:
 - Examples: Duelly (AI search visibility), MarketMojo (AI prospecting)
 
 PRICING (premium, one-time builds; you own everything, no monthly lock-in required):
-- Agent Only: starting at $5,000. We deploy a premium custom AI agent on your existing site.
-- Agent + AI-Ready Site: starting at $10,000. We rebuild your site for AI, then deploy the agent on top.
-- SaaS / larger custom platforms: scoped per project, typically $15,000+.
-Every build is custom and premium, so these are starting points, not fixed quotes. Offer to book a discovery call for an exact number.
+- We do NOT publish fixed prices. Every build (a website, an AI agent, or both) is custom, so it is quoted per project.
+- Do NOT invent, estimate, or quote specific dollar amounts. If asked "how much," explain that pricing depends on scope and that we give an exact number on a quick, free discovery call, then offer to book one.
+- What shapes the quote: whether they need a website, an agent, or both; the size of the site; integrations; and how much content/training is involved.
 
 CONTACT: ${CONTACT.email} or the contact form on our site.`

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { MessageSquare, Mic, Workflow, ArrowRight, ChevronDown, Zap, Clock, Users, Rocket } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { DemoSection } from '@/components/demo-section'
-import { PRICING_TIERS } from '@/lib/business-info'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -19,6 +18,7 @@ export default function Home() {
   return (
     <div className="bg-grid">
       <Navbar />
+      {/* --- PREVIOUS ORDER (revert: uncomment this block, comment out the NEW ORDER below) ---
       <Hero />
       <Services />
       <RecentWork />
@@ -26,6 +26,20 @@ export default function Home() {
       <HowItWorks />
       <Testimonials />
       <Stats />
+      <Pricing />
+      <FAQ />
+      <CTA />
+      <Footer />
+      --- end previous order --- */}
+
+      {/* --- NEW ORDER (design-lead recommendation): hook, then let them USE it, then explain --- */}
+      <Hero />
+      <DemoSection />
+      <Services />
+      <Stats />
+      <RecentWork />
+      <HowItWorks />
+      <Testimonials />
       <Pricing />
       <FAQ />
       <CTA />
@@ -460,51 +474,41 @@ function Testimonials() {
 }
 
 function Pricing() {
-  const tiers = PRICING_TIERS
+  const points = [
+    { icon: Rocket, title: 'Custom quoted', text: 'Every build is different. We scope your project to exactly what you need, then give you one clear number.' },
+    { icon: Zap, title: 'One-time build', text: 'You own everything we build. No monthly lock-in required, no surprise fees down the road.' },
+    { icon: Clock, title: 'Fast turnaround', text: 'Most projects go live in two to four weeks from our first call.' },
+  ]
 
   return (
     <section id="pricing" className="py-24 md:py-32 border-t border-[#1f1f2e]">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-12">
-          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">Simple Pricing</motion.h2>
-          <motion.p variants={fadeUp} className="text-gray-400 max-w-xl mx-auto">Every build is custom. Here is where most projects land.</motion.p>
+          <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold text-white mb-4">What It Costs</motion.h2>
+          <motion.p variants={fadeUp} className="text-gray-400 max-w-xl mx-auto">
+            Websites, AI agents, or both. Every build is custom, so we quote it on a quick call once we understand what you need.
+          </motion.p>
         </motion.div>
 
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {tiers.map(tier => (
-            <motion.div
-              key={tier.name}
-              variants={fadeUp}
-              className={`glass-card rounded-2xl p-8 flex flex-col ${tier.highlight ? 'border-[#00d4ff]/30 glow-cyan' : ''}`}
-            >
-              <h3 className="text-lg font-bold text-white mb-1">{tier.name}</h3>
-              <p className="text-xs text-gray-500 mb-4">{tier.description}</p>
-              <div className="text-3xl font-bold text-white mb-6">{tier.price}</div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {tier.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                    <Zap className="w-4 h-4 text-[#00d4ff] flex-shrink-0 mt-0.5" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#contact"
-                className={`w-full py-3.5 rounded-lg font-semibold text-center transition block ${
-                  tier.highlight
-                    ? 'bg-[#00d4ff] text-black hover:bg-[#00b8e6]'
-                    : 'bg-[#1f1f2e] text-white hover:bg-[#2a2a3e]'
-                }`}
-              >
-                {tier.cta}
-              </a>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid sm:grid-cols-3 gap-6 mb-12">
+          {points.map(p => (
+            <motion.div key={p.title} variants={fadeUp} className="glass-card rounded-2xl p-6 text-center">
+              <p.icon className="w-7 h-7 text-[#00d4ff] mx-auto mb-4" />
+              <h3 className="text-base font-bold text-white mb-2">{p.title}</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">{p.text}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.p initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center text-xs text-gray-600 mt-6">
-          One-time build. You own everything. No monthly lock-in required.
-        </motion.p>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#00d4ff] text-black font-bold text-lg hover:bg-[#00b8e6] transition shadow-lg shadow-[#00d4ff]/20"
+          >
+            Book a Free Discovery Call <ArrowRight className="w-5 h-5" />
+          </a>
+          <p className="text-xs text-gray-600 mt-4">15 minutes. We'll scope your project and give you an honest number. No pressure.</p>
+        </motion.div>
       </div>
     </section>
   )
