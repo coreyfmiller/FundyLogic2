@@ -23,8 +23,9 @@ export const CONTACT = {
  * - EMAIL_FROM: the verified sender for all outbound mail from the site/bots.
  * - LEAD_NOTIFY_TO: where lead notifications (contact form, chat, voice) are delivered.
  */
+// Sender must be on the verified fundylogic.com domain. Recipient can be anything.
 export const EMAIL_FROM = 'FundyLogic <leads@fundylogic.com>'
-export const LEAD_NOTIFY_TO = 'projects@fundylogic.com'
+export const LEAD_NOTIFY_TO = 'coreyfmiller@gmail.com'
 
 export type PricingTier = {
   name: string
