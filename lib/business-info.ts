@@ -24,7 +24,7 @@ export const CONTACT = {
  * - LEAD_NOTIFY_TO: where lead notifications (contact form, chat, voice) are delivered.
  */
 export const EMAIL_FROM = 'FundyLogic <leads@fundylogic.com>'
-export const LEAD_NOTIFY_TO = 'info@fundylogic.com'
+export const LEAD_NOTIFY_TO = 'projects@fundylogic.com'
 
 export type PricingTier = {
   name: string
