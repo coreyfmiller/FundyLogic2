@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { EMAIL_FROM, LEAD_NOTIFY_TO } from '@/lib/business-info'
 
 /**
  * Vapi server webhook. Vapi POSTs call events here; we care about "end-of-call-report",
@@ -11,7 +12,7 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY || ''
-const NOTIFICATION_EMAIL = 'coreyfmiller@gmail.com'
+const NOTIFICATION_EMAIL = LEAD_NOTIFY_TO
 
 export async function POST(req: NextRequest) {
   try {
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest) {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'FundyLogic Voice <corey@duelly.ai>',
+        from: EMAIL_FROM,
         to: NOTIFICATION_EMAIL,
         subject: `New phone lead from voice agent (${customerNumber})`,
         text,

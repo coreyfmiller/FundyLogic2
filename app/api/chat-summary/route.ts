@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { EMAIL_FROM, LEAD_NOTIFY_TO } from '@/lib/business-info'
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY || ''
-const NOTIFICATION_EMAIL = 'coreyfmiller@gmail.com'
+const NOTIFICATION_EMAIL = LEAD_NOTIFY_TO
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'FundyLogic AI <corey@duelly.ai>',
+        from: EMAIL_FROM,
         to: NOTIFICATION_EMAIL,
         subject,
         text: `New chat on FundyLogic.com:\n\nMessages: ${messages.length}\n${contactInfo.length > 0 ? `Contact: ${contactInfo.join(', ')}\n` : ''}\n--- CONVERSATION ---\n${transcript}`,

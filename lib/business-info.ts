@@ -16,6 +16,16 @@ export const CONTACT = {
   location: 'Quispamsis, New Brunswick',
 }
 
+/**
+ * Email sending config (single source of truth). FundyLogic sends from its OWN domain,
+ * fundylogic.com (verified in Resend), NOT from duelly.ai. Every route that emails must
+ * import these so senders never drift again.
+ * - EMAIL_FROM: the verified sender for all outbound mail from the site/bots.
+ * - LEAD_NOTIFY_TO: where lead notifications (contact form, chat, voice) are delivered.
+ */
+export const EMAIL_FROM = 'FundyLogic <leads@fundylogic.com>'
+export const LEAD_NOTIFY_TO = 'info@fundylogic.com'
+
 export type PricingTier = {
   name: string
   price: string

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { EMAIL_FROM, LEAD_NOTIFY_TO } from '@/lib/business-info'
 
 export async function POST(request: Request) {
   try {
@@ -21,8 +22,8 @@ export async function POST(request: Request) {
     const wants = budget ? (wantsMap[budget] || budget) : ''
 
     await resend.emails.send({
-      from: 'FundyLogic <corey@duelly.ai>',
-      to: ['coreyfmiller@gmail.com'],
+      from: EMAIL_FROM,
+      to: [LEAD_NOTIFY_TO],
       replyTo: email,
       subject: `New Inquiry from ${name}${company ? ` (${company})` : ''}`,
       html: `<h2>New inquiry from FundyLogic.com</h2>`
