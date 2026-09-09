@@ -58,3 +58,12 @@ PRICING (premium, one-time builds; you own everything, no monthly lock-in requir
 - What shapes the quote: whether they need a website, an agent, or both; the size of the site; integrations; and how much content/training is involved.
 
 CONTACT: ${CONTACT.email} or the contact form on our site.`
+
+/**
+ * FULL SYSTEM PROMPT for the Vapi VOICE bot (assistant id baecb1f5-dc14-4640-8fce-51473731c446).
+ *
+ * The actual text lives in lib/vapi-voice-prompt.mjs (a plain module) so the dependency-free
+ * sync script can import it with node AND the app can import it here. Edit the prompt THERE.
+ * Push it live with:  npm run sync-vapi  (Vapi is external and cannot import our code).
+ */
+export { VAPI_VOICE_PROMPT } from './vapi-voice-prompt.mjs'
