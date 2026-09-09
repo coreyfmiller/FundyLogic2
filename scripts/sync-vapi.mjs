@@ -11,10 +11,12 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { VAPI_VOICE_PROMPT } from '../lib/vapi-voice-prompt.mjs'
+import { VAPI_VOICE_PROMPT, VAPI_INBOUND_GREETING } from '../lib/vapi-voice-prompt.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const BASE = 'https://api.vapi.ai'
+// Where Vapi POSTs end-of-call reports (the deployed webhook route).
+const WEBHOOK_URL = process.env.VAPI_WEBHOOK_URL || 'https://fundylogic.com/api/vapi-webhook'
 
 // Minimal .env.local parser (avoids a dotenv dependency).
 function loadEnvLocal() {
@@ -57,18 +59,57 @@ async function main() {
   const nonSystem = (assistant?.model?.messages ?? []).filter((m) => m.role !== 'system')
   const messages = [{ role: 'system', content: VAPI_VOICE_PROMPT }, ...nonSystem]
 
-  // 2. PATCH just the model block.
+  // 2. PATCH the model block plus the inbound greeting and sensible call controls.
+  //    (Outbound calls override firstMessage per-call in make-call.mjs.)
   const patchRes = await fetch(`${BASE}/assistant/${ASSISTANT_ID}`, {
     method: 'PATCH',
     headers,
-    body: JSON.stringify({ model: { provider, model, messages } }),
+    body: JSON.stringify({
+      model: { provider, model, messages },
+      firstMessage: VAPI_INBOUND_GREETING,
+      endCallPhrases: ['goodbye', 'bye now', 'have a good one', 'talk soon', 'take care'],
+      silenceTimeoutSeconds: 30,
+      maxDurationSeconds: 600,
+      // Send end-of-call reports to our webhook so voice leads get emailed to us.
+      server: { url: WEBHOOK_URL },
+      serverMessages: ['end-of-call-report'],
+      // Auto-generate a summary and a structured lead object for every call.
+      analysisPlan: {
+        summaryPlan: {
+          messages: [
+            { role: 'system', content: 'You summarize a sales discovery phone call in 3 to 5 sentences: who they are, their business, the pain we uncovered, what they are interested in (website / agent / software), and the agreed next step.' },
+            { role: 'user', content: 'Summarize this call:\n\n{{transcript}}' },
+          ],
+        },
+        structuredDataPlan: {
+          enabled: true,
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string', description: 'Caller name' },
+              businessName: { type: 'string' },
+              businessType: { type: 'string', description: 'What the business does / industry' },
+              websiteSituation: { type: 'string', description: 'Do they have a site, how old, how it performs' },
+              currentLeadHandling: { type: 'string', description: 'How they handle calls/leads now, what is missed' },
+              biggestPain: { type: 'string' },
+              interestedIn: { type: 'string', description: 'website, agent, software, or not sure' },
+              decisionMaker: { type: 'string', description: 'yes, no, or unknown' },
+              timeline: { type: 'string', description: 'soon, exploring, or unknown' },
+              bestContact: { type: 'string', description: 'phone and/or email captured' },
+              leadRating: { type: 'string', description: 'hot, warm, or cold' },
+            },
+          },
+        },
+      },
+    }),
   })
   if (!patchRes.ok) throw new Error(`PATCH assistant failed: ${patchRes.status} ${await patchRes.text()}`)
 
-  console.log('Vapi voice prompt updated successfully.')
+  console.log('Vapi voice assistant updated successfully.')
   console.log(`Assistant: ${ASSISTANT_ID}`)
   console.log(`Model: ${provider}/${model}`)
   console.log(`Prompt length: ${VAPI_VOICE_PROMPT.length} chars`)
+  console.log(`Inbound greeting: "${VAPI_INBOUND_GREETING}"`)
 }
 
 main().catch((err) => {

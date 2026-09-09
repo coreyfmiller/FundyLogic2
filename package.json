@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sync-vapi": "node scripts/sync-vapi.mjs"
+    "sync-vapi": "node scripts/sync-vapi.mjs",
+    "import-number": "node scripts/import-number.mjs",
+    "make-call": "node scripts/make-call.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.39",
