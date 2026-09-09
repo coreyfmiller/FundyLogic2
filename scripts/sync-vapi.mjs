@@ -17,6 +17,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const BASE = 'https://api.vapi.ai'
 // Where Vapi POSTs end-of-call reports (the deployed webhook route).
 const WEBHOOK_URL = process.env.VAPI_WEBHOOK_URL || 'https://fundylogic.com/api/vapi-webhook'
+// The voice bot LLM. claude-3-5-sonnet-20240620 is deprecated (retires 2025-10-28);
+// claude-sonnet-4-5 is the current recommended Anthropic Sonnet on Vapi.
+const MODEL_PROVIDER = 'anthropic'
+const MODEL_NAME = 'claude-sonnet-4-5-20250929'
 
 // Minimal .env.local parser (avoids a dotenv dependency).
 function loadEnvLocal() {
@@ -54,8 +58,9 @@ async function main() {
   if (!getRes.ok) throw new Error(`GET assistant failed: ${getRes.status} ${await getRes.text()}`)
   const assistant = await getRes.json()
 
-  const provider = assistant?.model?.provider ?? 'anthropic'
-  const model = assistant?.model?.model ?? 'claude-3-5-sonnet-20240620'
+  // Pin to the current model (upgrades off the deprecated claude-3-5-sonnet-20240620).
+  const provider = MODEL_PROVIDER
+  const model = MODEL_NAME
   const nonSystem = (assistant?.model?.messages ?? []).filter((m) => m.role !== 'system')
   const messages = [{ role: 'system', content: VAPI_VOICE_PROMPT }, ...nonSystem]
 
